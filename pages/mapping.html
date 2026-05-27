@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Карта Волгограда</title>
+    <link rel="icon" type="image/x-icon" href="../images/Gerb.svg">
+    <style>
+        /* ===== БАЗОВЫЕ СТИЛИ ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html, body {
+            width: 100%;
+            height: 100%;
+            font-family: 'Inter', 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            overflow: hidden;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('../images/VolgogradNEW1.png');
+            background-attachment: fixed;
+            background-size: cover;
+        }
+        
+        /* ===== КОНТЕЙНЕР ===== */
+        .mapping-container {
+            display: flex;
+            height: 100vh;
+            padding: 20px;
+            gap: 20px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+        
+        /* ===== ПАНЕЛЬ КАРТЫ ===== */
+        .map-panel {
+            flex: 2;
+            background: #fff;
+            border-radius: 16px;
+            padding: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        #map {
+            flex: 1;
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        /* ===== ПАНЕЛЬ ПЛАНА ===== */
+        .plan-panel {
+            flex: 1;
+            max-width: 400px;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .plan-panel h2 {
+            margin: 0 0 16px 0;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #1a3a6b;
+            text-align: center;
+            padding-bottom: 12px;
+            border-bottom: 2px solid rgba(35,152,242,0.3);
+        }
+        
+        /* ===== КАТЕГОРИИ ===== */
+        .plan-category {
+            margin-bottom: 12px;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+            background: rgba(255,255,255,0.6);
+            overflow: hidden;
+        }
+        
+        .plan-category:hover {
+            background: rgba(35,152,242,0.12);
+            border-color: #2398F2;
+            transform: translateX(4px);
+        }
+        
+        .plan-category.active {
+            background: rgba(35,152,242,0.18);
+            border-color: #2398F2;
+            box-shadow: 0 4px 12px rgba(35,152,242,0.2);
+        }
+        
+        .plan-category-header {
+            padding: 10px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .plan-category h3 {
+            margin: 0;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .plan-category .count {
+            font-size: 0.85rem;
+            color: #666;
+            background: rgba(35,152,242,0.15);
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+        
+        /* ===== ПОДЭЛЕМЕНТЫ ===== */
+        .plan-subitems {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: rgba(255,255,255,0.4);
+        }
+        
+        .plan-category.active .plan-subitems {
+            max-height: 500px;
+        }
+        
+        .plan-subitem {
+            padding: 8px 14px 8px 28px;
+            font-size: 0.92rem;
+            color: #444;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            border-left: 3px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .plan-subitem::before {
+            content: "→";
+            color: #2398F2;
+            font-weight: bold;
+        }
+        
+        .plan-subitem:hover {
+            color: #2398F2;
+            background: rgba(35,152,242,0.08);
+            border-left-color: #2398F2;
+            padding-left: 32px;
+        }
+        
+        /* ===== ПОДСКАЗКА ===== */
+        .hint-box {
+            margin-top: auto;
+            padding-top: 14px;
+            border-top: 1px solid rgba(0,0,0,0.1);
+            font-size: 0.85rem;
+            color: rgba(26,58,107,0.8);
+            line-height: 1.5;
+        }
+        
+        .hint-box strong {
+            color: #1a3a6b;
+        }
+        
+        /* ===== АДАПТИВНОСТЬ ===== */
+        @media (max-width: 1024px) {
+            .mapping-container {
+                flex-direction: column;
+                padding: 12px;
+            }
+            .plan-panel {
+                max-width: none;
+                max-height: 40vh;
+            }
+            #map {
+                height: 50vh;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .plan-category h3 { font-size: 1rem; }
+            .plan-subitem { font-size: 0.88rem; padding: 7px 12px 7px 26px; }
+            .hint-box { font-size: 0.8rem; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="mapping-container">
+        <!-- Панель карты -->
+        <div class="map-panel">
+            <div id="map"></div>
+        </div>
+        
+        <!-- Панель плана -->
+        <div class="plan-panel">
+            <h2>🗺️ План сайта</h2>
+            
+            <!-- Храмы -->
+            <div class="plan-category" data-category="churches" onclick="toggleCategory('churches', event)">
+                <div class="plan-category-header">
+                    <h3>⛪ Храмы и церкви</h3>
+                    <span class="count">9</span>
+                </div>
+                <div class="plan-subitems">
+                    <div class="plan-subitem" onclick="openMainPage('churches', 0, event)">Кафедральный собор Александра Невского</div>
+                    <div class="plan-subitem" onclick="openMainPage('churches', 1, event)">Храм Сергия Радонежского</div>
+                    <div class="plan-subitem" onclick="openMainPage('churches', 2, event)">Храм Иоанна Кронштадского</div>
+                    <div class="plan-subitem" onclick="openMainPage('churches', 3, event)">Казанский кафедральный собор</div>
+                    <div class="plan-subitem" onclick="openMainPage('churches', 4, event)">Храм Всех Святых</div>
+                    <div class="plan-subitem" onclick="openMainPage('churches', 5, event)">Храм Георгия Победоносца</div>
+                    <div class="plan-subitem" onclick="openMainPage('churches', 6, event)">Храм Иоанна Предтечи</div>
+                    <div class="plan-subitem" onclick="openMainPage('churches', 7, event)">Свято-Владимирский храм</div>
+                    <div class="plan-subitem" onclick="openMainPage('churches', 8, event)">Спасо-Преображенский храм</div>
+                </div>
+            </div>
+            
+            <!-- Памятники -->
+            <div class="plan-category" data-category="monuments" onclick="toggleCategory('monuments', event)">
+                <div class="plan-category-header">
+                    <h3>🗿 Памятники и мемориалы</h3>
+                    <span class="count">7</span>
+                </div>
+                <div class="plan-subitems">
+                    <div class="plan-subitem" onclick="openMainPage('monuments', 0, event)">Мельница Гергардта</div>
+                    <div class="plan-subitem" onclick="openMainPage('monuments', 1, event)">Дом Павлова</div>
+                    <div class="plan-subitem" onclick="openMainPage('monuments', 2, event)">Памятник Ленину</div>
+                    <div class="plan-subitem" onclick="openMainPage('monuments', 3, event)">Катер «Гаситель»</div>
+                    <div class="plan-subitem" onclick="openMainPage('monuments', 4, event)">Волгоградский элеватор</div>
+                    <div class="plan-subitem" onclick="openMainPage('monuments', 5, event)">Мамаев курган</div>
+                    <div class="plan-subitem" onclick="openMainPage('monuments', 6, event)">Аллея Героев</div>
+                </div>
+            </div>
+            
+            <!-- Театры -->
+            <div class="plan-category" data-category="theaters" onclick="toggleCategory('theaters', event)">
+                <div class="plan-category-header">
+                    <h3>🎭 Театры</h3>
+                    <span class="count">5</span>
+                </div>
+                <div class="plan-subitems">
+                    <div class="plan-subitem" onclick="openMainPage('theaters', 0, event)">Кукольный театр</div>
+                    <div class="plan-subitem" onclick="openMainPage('theaters', 1, event)">ТЮЗ</div>
+                    <div class="plan-subitem" onclick="openMainPage('theaters', 2, event)">Казачий театр</div>
+                    <div class="plan-subitem" onclick="openMainPage('theaters', 3, event)">Царицынская опера</div>
+                    <div class="plan-subitem" onclick="openMainPage('theaters', 4, event)">Музыкальный театр</div>
+                </div>
+            </div>
+            
+            <!-- Музеи -->
+            <div class="plan-category" data-category="museums" onclick="toggleCategory('museums', event)">
+                <div class="plan-category-header">
+                    <h3>🏛️ Музеи</h3>
+                    <span class="count">5</span>
+                </div>
+                <div class="plan-subitems">
+                    <div class="plan-subitem" onclick="openMainPage('museums', 0, event)">Музей-панорама «Сталинградская битва»</div>
+                    <div class="plan-subitem" onclick="openMainPage('museums', 1, event)">«Россия — моя история»</div>
+                    <div class="plan-subitem" onclick="openMainPage('museums', 2, event)">Областной краеведческий музей</div>
+                    <div class="plan-subitem" onclick="openMainPage('museums', 3, event)">Мемориально-исторический музей</div>
+                    <div class="plan-subitem" onclick="openMainPage('museums', 4, event)">Волгоградский планетарий</div>
+                </div>
+            </div>
+            
+            <!-- Другие -->
+            <div class="plan-category" data-category="other" onclick="toggleCategory('other', event)">
+                <div class="plan-category-header">
+                    <h3>🎨 Другие достопримечательности</h3>
+                    <span class="count">4</span>
+                </div>
+                <div class="plan-subitems">
+                    <div class="plan-subitem" onclick="openMainPage('other', 0, event)">Фонтан «Искусство»</div>
+                    <div class="plan-subitem" onclick="openMainPage('other', 1, event)">Каланча пожарной команды</div>
+                    <div class="plan-subitem" onclick="openMainPage('other', 2, event)">Ж/д вокзал</div>
+                    <div class="plan-subitem" onclick="openMainPage('other', 3, event)">Метротрам</div>
+                </div>
+            </div>
+            
+            <!-- Гео/транспорт -->
+            <div class="plan-category" data-category="geo" onclick="toggleCategory('geo', event)">
+                <div class="plan-category-header">
+                    <h3>🌉 География и транспорт</h3>
+                    <span class="count">5</span>
+                </div>
+                <div class="plan-subitems">
+                    <div class="plan-subitem" onclick="openMainPage('geo', 0, event)">Волго-Донской канал</div>
+                    <div class="plan-subitem" onclick="openMainPage('geo', 1, event)">Волжская ГЭС</div>
+                    <div class="plan-subitem" onclick="openMainPage('geo', 2, event)">Речной вокзал</div>
+                    <div class="plan-subitem" onclick="openMainPage('geo', 3, event)">Центральная набережная</div>
+                    <div class="plan-subitem" onclick="openMainPage('geo', 4, event)">«Танцующий» мост</div>
+                </div>
+            </div>
+            
+            <div class="hint-box">
+                <strong>💡 Подсказка:</strong><br>
+                • Клик — подсветить на карте<br>
+                • Shift+клик / Двойной клик — перейти к объекту
+            </div>
+        </div>
+    </div>
+
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+    <script>
+        // ========== ДАННЫЕ ОБЪЕКТОВ (синхронизированы с index.html) ==========
+        const locations = {
+            churches: [
+                { name: 'Александра Невского', coords: [48.70946, 44.51356] },
+                { name: 'Сергия Радонежского', coords: [48.718864, 44.521339] },
+                { name: 'Иоанна Кронштадского', coords: [48.769750, 44.54030] },
+                { name: 'Казанский собор', coords: [48.699167, 44.484167] },
+                { name: 'Всех Святых', coords: [48.740547, 44.536769] },
+                { name: 'Георгия Победоносца', coords: [48.762494, 44.564525] },
+                { name: 'Иоанна Предтечи', coords: [48.701375, 44.514794] },
+                { name: 'Владимирский', coords: [48.627189, 44.439525] },
+                { name: 'Спасо-Преображенский', coords: [48.757494, 44.511855] }
+            ],
+            monuments: [
+                { name: 'Мельница Гергардта', coords: [48.715518, 44.532997] },
+                { name: 'Дом Павлова', coords: [48.716111, 44.531667] },
+                { name: 'Памятник Ленину', coords: [48.527664, 44.558917] },
+                { name: 'Катер «Гаситель»', coords: [48.697598, 44.512922] },
+                { name: 'Элеватор', coords: [48.687953, 44.480055] },
+                { name: 'Мамаев курган', coords: [48.742222, 44.536944] },
+                { name: 'Аллея Героев', coords: [48.705926, 44.518610] }
+            ],
+            theaters: [
+                { name: 'Кукольный театр', coords: [48.707870, 44.507282] },
+                { name: 'ТЮЗ', coords: [48.690798, 44.488382] },
+                { name: 'Казачий театр', coords: [48.694967, 44.497474] },
+                { name: 'Царицынская опера', coords: [48.766522, 44.560049] },
+                { name: 'Музыкальный театр', coords: [48.705402, 44.522194] }
+            ],
+            museums: [
+                { name: 'Музей-панорама', coords: [48.715009, 44.532817] },
+                { name: 'Россия — моя история', coords: [48.700061, 44.512581] },
+                { name: 'Краеведческий музей', coords: [48.704981, 44.512517] },
+                { name: 'Мемориальный музей', coords: [48.711330, 44.514684] },
+                { name: 'Планетарий', coords: [48.714479, 44.524603] }
+            ],
+            other: [
+                { name: 'Фонтан «Искусство»', coords: [48.704622, 44.5205] },
+                { name: 'Каланча пожарной команды', coords: [48.7098, 44.51] },
+                { name: 'Ж/д вокзал', coords: [48.712555, 44.513508] },
+                { name: 'Метротрам', coords: [48.7175, 44.5305] }
+            ],
+            geo: [
+                { name: 'Волго-Донской канал', coords: [48.500495, 44.25020] },
+                { name: 'Волжская ГЭС', coords: [48.8261, 44.67207] },
+                { name: 'Речной вокзал', coords: [48.701056, 44.519381] },
+                { name: 'Набережная', coords: [48.703668, 44.52181] },
+                { name: '«Танцующий» мост', coords: [48.721537, 44.550421] }
+            ]
+        };
+
+        // Маппинг категорий на секции главной страницы
+        const sectionMap = {
+            churches: 'attraction-section',
+            monuments: 'museums-section',
+            theaters: 'theaters-section',
+            museums: 'real-museums-section',
+            other: 'other-section',
+            geo: 'geo-section'
+        };
+
+        let map;
+        let markers = {};
+        let activeCategory = null;
+
+        // ========== ИНИЦИАЛИЗАЦИЯ ==========
+        ymaps.ready(init);
+
+        function init() {
+            map = new ymaps.Map("map", {
+                center: [48.7080, 44.5133],
+                zoom: 13,
+                controls: ['zoomControl', 'fullscreenControl']
+            });
+
+            // Создаём маркеры
+            Object.keys(locations).forEach(category => {
+                markers[category] = [];
+                locations[category].forEach((loc, index) => {
+                    const placemark = new ymaps.Placemark(loc.coords, {
+                        balloonContentHeader: loc.name,
+                        balloonContentBody: `<strong>${loc.name}</strong><br><small>Клик — перейти</small>`,
+                        hintContent: loc.name
+                    }, {
+                        preset: 'islands#blueCircleIcon',
+                        iconColor: getCategoryColor(category)
+                    });
+                    
+                    placemark.events.add('click', (e) => {
+                        e.stopPropagation();
+                        openMainPage(category, index, e);
+                    });
+                    
+                    map.geoObjects.add(placemark);
+                    markers[category].push(placemark);
+                });
+            });
+
+            // Обработка двойного клика по категориям
+            document.querySelectorAll('.plan-category').forEach(el => {
+                el.addEventListener('dblclick', (e) => {
+                    const category = el.dataset.category;
+                    openMainPage(category, 0, e);
+                });
+            });
+
+            // Обработка возврата с главной страницы
+            handleReturnFromMain();
+        }
+
+        // ========== ФУНКЦИИ ==========
+
+        function getCategoryColor(category) {
+            const colors = {
+                churches: '#8B4513', monuments: '#8B1A2A', theaters: '#4B0082',
+                museums: '#2E8B57', other: '#FF8C00', geo: '#1E90FF'
+            };
+            return colors[category] || '#2398F2';
+        }
+
+        function toggleCategory(category, event) {
+            // Shift+клик или двойной клик — переход
+            if (event && (event.shiftKey || event.detail === 2)) {
+                openMainPage(category, 0, event);
+                return;
+            }
+            
+            const categoryEl = document.querySelector(`[data-category="${category}"]`);
+            
+            // Снимаем выделение со всех
+            document.querySelectorAll('.plan-category').forEach(el => el.classList.remove('active'));
+            clearHighlights();
+            
+            // Если кликнули на активную — снимаем
+            if (activeCategory === category) {
+                activeCategory = null;
+                return;
+            }
+            
+            // Подсвечиваем
+            activeCategory = category;
+            categoryEl.classList.add('active');
+            highlightMarkers(category);
+            
+            // Центрируем карту
+            if (locations[category]?.[0]) {
+                map.setCenter(locations[category][0].coords, 14);
+            }
+        }
+
+        function highlightMarkers(category) {
+            clearHighlights();
+            markers[category]?.forEach(marker => {
+                marker.options.set('preset', 'islands#circleIcon');
+                marker.options.set('iconColor', getCategoryColor(category));
+            });
+        }
+
+        function clearHighlights() {
+            Object.keys(markers).forEach(cat => {
+                markers[cat]?.forEach(marker => {
+                    marker.options.set('preset', 'islands#blueCircleIcon');
+                });
+            });
+        }
+
+        function openMainPage(category, index, event) {
+            event?.preventDefault();
+            event?.stopPropagation();
+            
+            const section = sectionMap[category];
+            if (!section) return;
+            
+            const params = new URLSearchParams({ section, slide: index, category });
+            window.location.href = `../index.html?${params.toString()}`;
+        }
+
+        function handleReturnFromMain() {
+            const params = new URLSearchParams(window.location.search);
+            const category = params.get('category');
+            const slide = params.get('slide');
+            
+            if (category && locations[category]) {
+                toggleCategory(category, null);
+                if (slide && locations[category][slide]) {
+                    map.setCenter(locations[category][slide].coords, 16);
+                }
+                // Очищаем параметры
+                setTimeout(() => {
+                    history.replaceState(null, null, window.location.pathname);
+                }, 500);
+            }
+        }
+    </script>
+</body>
+</html>

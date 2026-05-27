@@ -1,0 +1,152 @@
+<script src="https://unpkg.com/ionicons@4.1.2/dist/ionicons.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Monomakh&display=swap" rel="stylesheet">
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Царицын</title>
+	<link rel="stylesheet" type="text/css" href="ts.css">
+	<script src="ts.js" defer></script>
+	<link rel="icon" type="image/x-icon" href="../images/Gerb.svg">
+</head>
+
+<body>
+	<div class="page-wrapper">
+	<div class="main-content">
+		<header>
+			<div class="logo">
+				<img src="../images/Tsar2.png" class="img1" alt="Герб">
+				<h1>Царицынъ</h1>
+			</div>
+			
+			<!-- Музыкальный плеер Вега П-410С (Царицын) -->
+<div class="header-player">
+    <div class="player-brand">
+        <span>Граммофон</span>
+    </div>
+    
+    <div class="player-progress-bar" onclick="seekHeader(event)">
+        <div class="progress-fill" id="headerProgress"></div>
+    </div>
+    
+    <div class="player-controls-row">
+        <div class="player-controls-compact">
+            <button class="player-btn" onclick="prevTrack()" title="Предыдущий">
+                <svg class="icon-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M12 21c4.969 0 9-4.031 9-9s-4.031-9-9-9-9 4.031-9 9 4.031 9 9 9Z" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="m5.495 11.563 5.365-3.241a.505.505 0 0 1 .765.436v2.5l4.86-2.936a.505.505 0 0 1 .765.436v6.481a.505.505 0 0 1-.765.437l-4.86-2.936v2.5a.505.505 0 0 1-.765.436l-5.365-3.241a.51.51 0 0 1 0-.872Z" fill="currentColor" stroke="none"/>
+                </svg>
+            </button>
+            
+            <button class="player-btn play-btn" onclick="togglePlay()" id="headerPlayBtn" title="Воспроизвести/Пауза">
+                <svg class="icon-svg icon-play" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M21 12c0-4.969-4.031-9-9-9s-9 4.031-9 9 4.031 9 9 9 9-4.031 9-9Z" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="m10.14 15.676 5.365-3.241a.511.511 0 0 0 0-.872L10.14 8.322a.505.505 0 0 0-.765.436v6.481a.505.505 0 0 0 .765.437Z" fill="currentColor" stroke="none"/>
+                </svg>
+                <svg class="icon-svg icon-pause" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display:none">
+                    <path d="M21 12c0-4.969-4.031-9-9-9s-9 4.031-9 9 4.031 9 9 9 9-4.031 9-9Z" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                    <g fill="currentColor" stroke="none">
+                        <rect x="8" y="7" width="2.5" height="10" rx="0.5"/>
+                        <rect x="13.5" y="7" width="2.5" height="10" rx="0.5"/>
+                    </g>
+                </svg>
+            </button>
+            
+            <button class="player-btn" onclick="nextTrack()" title="Следующий">
+                <svg class="icon-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M21 12c0-4.969-4.031-9-9-9s-9 4.031-9 9 4.031 9 9 9 9-4.031 9-9Z" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M18.505 11.563 13.14 8.322a.505.505 0 0 0-.765.436v2.5l-4.86-2.936a.505.505 0 0 0-.765.436v6.481a.505.505 0 0 0 .765.437l4.86-2.936v2.5a.505.505 0 0 0 .765.436l5.365-3.241a.511.511 0 0 0 0-.872Z" fill="currentColor" stroke="none"/>
+                </svg>
+            </button>
+            
+            <div class="volume-wrapper">
+                <button class="player-btn" onclick="toggleVolumeSlider()" id="volumeBtn" title="Громкость">
+                    <svg class="icon-svg icon-volume" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M11 5 6 9H2v6h4l5 4V5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                        <path d="M15.54 8.46a5 5 0 0 1 0 7.07" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                    <svg class="icon-svg icon-volume-mute" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display:none">
+                        <path d="M11 5 6 9H2v6h4l5 4V5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                        <line x1="23" y1="9" x2="17" y2="15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        <line x1="17" y1="9" x2="23" y2="15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                </button>
+                <div class="volume-slider-wrapper" id="volumeSliderWrapper">
+                    <input type="range" min="0" max="100" value="70" class="volume-slider" 
+                           id="headerVolumeSlider" oninput="setVolume(this.value)">
+                </div>
+            </div>
+        </div>
+        
+        <select class="track-select" id="trackSelect" onchange="selectTrack(this.value)">
+            <option value="">Выберите музыкальную композицію</option>
+        </select>
+    </div>
+    
+    <!-- <div class="player-track-bottom">
+        <span id="currentTrackDisplay">Выберите музыкальную композицію</span>
+    </div> -->
+</div>
+		</header>
+		
+		<!-- Блок "Времена" - три соединённых цветных блока -->
+		<!-- Блок "Времена" - три соединённых цветных блока -->
+		<div class="times-container">
+			<a href="../index.html" style="text-decoration: none; color: inherit;">
+				<div class="time-block time-blue faded">Волгоград</div>
+			</a>
+			<a href="stalingrad.html" style="text-decoration: none; color: inherit;">
+			<div class="time-block time-red faded">Сталинград</div>
+			</a>
+			<a href="tsaritsyn.html" style="text-decoration: none; color: inherit;">
+				<div class="time-block time-white active">Царицын</div>
+			</a>
+		</div>
+		
+		</div>
+		<!-- ФУТЕР -->
+		<footer class="footer">
+			<div class="footer-container">
+				<!-- Левая колонка -->
+				<div class="footer-col">
+					<div class="footer-logo">
+						<img src="../images/Tsar2.png" class="footer-gerb" alt="Герб">
+						<span>Царицын</span>
+					</div>
+					<div class="footer-copyright">
+						© ВЫСОЧАЙШЕ утверждено 24 марта 1908 года <br>Въ Царицынскомъ уѣздѣ
+					</div>
+				</div>
+
+				<!-- Центральная колонка -->
+				<div class="footer-col">
+					<h4>О проектѣ</h4>
+					<p>Саратовская губернiя<br>Царицынскiй уѣзд, городъ Царицынъ.</p>
+					<p class="footer-authors">Авторы:<br><a href="#">Господинъ Рябцевъ</a> | <a href="#">Господинъ Затонский</a> | <a href="#">Господинъ Наумкенков</a></p>
+				</div>
+
+				<!-- Правая колонка -->
+				<div class="footer-col">
+					<h4>Городская Дума</h4>
+					<p>
+						 Письмо нам:<br>
+						<a href="tel:+78442200000">"Царицынъ. Въ Городскую Управу"</a>
+					</p>
+					<p class="footer-authors">
+						Адресъ администрацiи:<br>
+						<a href="mailto:info@volgadmin.ru">Соборная площадь</a>
+					</p>
+					<!-- <p class="footer-authors">
+						📱 Контакты авторов:<br>
+						<a href="#">Рябцев А. Е.</a> | <a href="#">Затонский И.Д.</a>
+					</p> -->
+				</div>
+			</div>
+		</footer>
+	</div>
+</body>
+</html>

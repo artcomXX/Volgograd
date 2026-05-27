@@ -1,0 +1,1631 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
+/* Убираем все отступы */
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: hidden !important;
+    width: 100%;
+}
+
+/* ========== ТИТУЛЬНЫЙ СЛАЙД ========== */
+.hero-section {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 1; /* Низкий z-index */
+    transition: opacity 0.485s ease;
+}
+
+.hero-section.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.hero-background {
+    position: absolute;
+    top: -50px; /* Небольшой запас */
+    left: -50px;
+    right: -50px;
+    bottom: -50px;
+    z-index: -1;
+}
+
+.hero-background img {
+    width: calc(100% + 100px);
+    height: calc(100% + 100px);
+    object-fit: cover;
+    filter: brightness(0.7);
+}
+
+.hero-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 1;
+}
+
+.hero-title {
+    font-size: 5rem;
+    font-weight: 800;
+    color: #fff;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    letter-spacing: 0.1em;
+    animation: fadeInUp 1.5s ease;
+}
+
+.hero-arrow {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    color: #fff;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: bounce 2s infinite;
+    z-index: 1;
+}
+
+.hero-arrow:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateX(-50%) scale(1.1);
+}
+
+.hero-arrow:active {
+    transform: translateX(-50%) scale(0.95);
+}
+
+/* ========== ОСНОВНОЙ КОНТЕНТ ========== */
+.page-wrapper {
+    position: relative;
+    z-index: 2; /* Выше hero */
+    transform: translateY(100vh); /* Изначально сдвинут вниз за экран */
+    transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.page-wrapper.visible {
+    transform: translateY(0); /* Выезжает на экран */
+}
+
+/* Блокировка скролла */
+body.no-scroll {
+    overflow: hidden !important;
+}
+
+/* Анимации */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Адаптив */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 3rem;
+    }
+    .hero-arrow {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+        bottom: 30px;
+    }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ========== ФИКСИРОВАННЫЙ ФОН ========== */
+html {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('images/VolgogradNEW1.png');
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
+  overflow-x: hidden !important;
+}
+
+body {
+  font-family: 'Inter', 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.body1 {
+    font-family: system-ui, -apple-system, sans-serif;
+    display: flex;
+    padding: 20px;
+}
+
+.map-window {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+    padding: 10px;
+    width: 100%;
+    max-width: 800px;
+    margin: 0px 220px;
+}
+
+#map {
+    width: 100%;
+    height: 450px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Скрытие копирайта Яндекс */
+[class*="ymaps"][class*="copyright"] { display: none !important; }
+
+/* ========== СЛАЙДЕР ДОСТОПРИМЕЧАТЕЛЬНОСТЕЙ ========== */
+.attractions-slider {
+    position: relative;
+    width: 100%;
+    overflow: visible; /* ← Было hidden, меняем на visible */
+    min-height: 700px;
+    height: auto;      /* ← Позволяет расти по контенту */
+    padding-bottom: 20px; /* ← Отступ снизу, чтобы контент не прилипал */
+
+    /* overflow: hidden !important; */
+}
+/* --- FIX: GPU-ускорение и стабилизация слоев --- */
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    /* translate3d включает аппаратное ускорение */
+    transform: translate3d(100%, 0, 0);
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                opacity 0.8s ease;
+    pointer-events: none;
+    z-index: 1;
+    /* Предотвращает перерисовку фона */
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    isolation: isolate;
+}
+
+/* === ПЛАВНАЯ АНИМАЦИЯ СЛАЙДОВ === */
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+    transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                opacity 1.2s ease;
+    pointer-events: none;
+    z-index: 1;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    isolation: isolate;
+}
+
+.slide.active {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    pointer-events: all;
+    z-index: 2;
+    position: relative !important;
+    height: auto;
+}
+
+.slide.prev {
+    transform: translate3d(-100%, 0, 0);
+    opacity: 0;
+}
+
+.slide.next {
+    transform: translate3d(100%, 0, 0);
+    opacity: 0;
+}
+
+/* Скрываем карты до полной инициализации */
+.slide .map-window-small {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    will-change: opacity;
+}
+
+.slide.active .map-window-small {
+    opacity: 1;
+}
+
+/* --- FIX: Универсальные стили для ВСЕХ карт --- */
+[id^="map-"] {
+    width: 100%;
+    height: 350px;
+    min-height: 350px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #e9ecef;
+    /* Фикс для рендеринга карты внутри анимации */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* Фиксированная кнопка-стрелка */
+.slider-arrow {
+    position: fixed;
+    right: 30px;
+    top: 400px;
+    transform: translateY(-50%);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(12px);
+    color: #fff;
+    font-size: 2rem;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* FIX: Стабилизация кнопки */
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+}
+
+.slider-arrow-left {
+    right: auto;
+    left: 30px;
+}
+
+.slider-arrow:hover {
+    background: rgba(255, 255, 255, 0.35);
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.slider-arrow:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+.slider-arrow.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .slider-arrow { display: none; }
+    .attractions-slider { min-height: auto; }
+}
+
+/* ========== СЕКЦИЯ ДОСТОПРИМЕЧАТЕЛЬНОСТЕЙ ========== */
+.attraction-section {
+    margin-top: 30px;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(3px);
+    padding: 40px 0px 0px 20px;
+    color: #fff;
+    /* FIX: Создаем новый контекст наложения */
+    isolation: isolate;
+}
+
+.attraction-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.attraction-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 40px;
+    align-items: start; /* ← Картинка/карта сверху, текст ниже */
+}
+
+.attraction-map-wrapper,
+.attraction-image-wrapper {
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+/* УДАЛЕНО: Конфликтующие стили для #map-radonezh, #map-kronstadt */
+/* Теперь работает универсальный [id^="map-"] выше */
+
+.attraction-photo {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    display: block;
+    border-radius: 12px;
+}
+
+/* --- FIX: Блок с текстом (затемнение) --- */
+.attraction-info {
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    
+    height: auto;
+    min-height: 150px;
+    width: 100%;
+    
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    isolation: isolate;
+    
+    /* === НОВОЕ: Защита от длинного текста === */
+    word-wrap: break-word;      /* Перенос длинных слов */
+    overflow-wrap: anywhere;    /* Разрыв в любом месте если нужно */
+    text-align: justify;        /* Выравнивание текста (опционально) */
+    hyphens: auto;              /* Автоматические переносы по слогам */
+}
+
+.attraction-info h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+.attraction-info p {
+    line-height: 1.7;
+    margin-bottom: 15px;
+    color: #e0e0e0;
+}
+
+.attraction-info strong {
+    color: #fff;
+}
+.attraction-photo,
+[id^="map-"] {
+    width: 100%;
+    height: 350px;
+    min-height: 350px;
+    object-fit: cover;
+    border-radius: 12px;
+    display: block;
+    flex-shrink: 0; /* ← Не сжиматься, если текст длинный */
+}
+
+/* Адаптив контента */
+@media (max-width: 768px) {
+    .attraction-content { 
+        grid-template-columns: 1fr; 
+        align-items: start;
+    }
+    
+    .attraction-photo, 
+    [id^="map-"] { 
+        height: 280px; 
+    }
+    
+    .attraction-info { 
+        padding: 20px;
+        /* max-height: 500px;     */
+        overflow-y: auto;     /* ← Скролл внутри блока */
+    }
+    
+    /* Красивый скроллбар */
+    .attraction-info::-webkit-scrollbar {
+        width: 6px;
+    }
+    .attraction-info::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+    }
+    .attraction-info::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.4);
+        border-radius: 3px;
+    }
+}
+
+/* ========== ОБЕРТКА И ХЕДЕР ========== */
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  margin: 30px 220px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.img1 { width: 60px; height: auto; }
+
+h1 {
+  font-size: 32px;
+  margin: 0;
+  font-weight: 800;
+  background: linear-gradient(135deg, #FFFFFF, #D4E6FF);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: 28px;
+  margin: 0 0 0 -50%;
+  font-weight: 800;
+  background: linear-gradient(135deg, #FFFFFF);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  letter-spacing: -0.02em;
+}
+
+/* Синий прямоугольник - виджеты */
+.widgets {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  background: #2398F2;
+  padding: 15px 35px;
+  border-radius: 24px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.socials { display: flex; gap: 15px; }
+
+.social-icon {
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-decoration: none;
+  font-size: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  fill: white;
+}
+
+.social-icon.socials-tg svg,
+.social-icon.socials-odnokl svg { width: 30px; height: 30px; }
+.social-icon.socials-MAX svg { width: 35px; height: 35px; }
+.social-icon ion-icon { font-size: 26px; color: white; fill: white; }
+
+.social-icon:hover {
+  background: #2398F2;
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.contacts { display: flex; gap: 15px; }
+
+.contact-item {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  padding: 10px 22px;
+  border-radius: 36px;
+  color: white;
+  font-size: 17px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  letter-spacing: 0.3px;
+}
+
+.contact-item:hover {
+  background: #2398F2;
+  transform: translateY(-2px);
+}
+
+/* ========== КНОПКИ ЭПОХ ========== */
+.times-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0px auto;
+  width: fit-content;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.time-block {
+  padding: 12px 28px;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-align: center;
+}
+
+.time-blue { background: #2398F2; color: white; }
+.time-red { background: #8B1A2A; color: rgba(255, 255, 255, 0.6); }
+.time-white { background: #D9D9D9; color: rgba(0, 0, 0, 0.5); }
+
+.time-block.active { filter: brightness(1); color: white; }
+.time-red.faded:hover { background: #C41E3A; color: white; }
+.time-white:hover { background: white; color: #1A3A6B; }
+.time-blue.active:hover { transform: none; }
+
+/* ========== ФУТЕР ========== */
+.footer {
+  margin-top: 80px;
+  background: #2398F2;
+  padding: 40px 0 30px;
+  width: 100%;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.footer-col { flex: 1; min-width: 200px; }
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.footer-gerb { width: 45px; height: auto; }
+.footer-logo span { font-size: 20px; font-weight: 700; color: white; }
+.footer-copyright { color: rgba(255, 255, 255, 0.8); font-size: 12px; line-height: 1.5; }
+.footer-col h4 { color: white; font-size: 16px; font-weight: 700; margin-bottom: 15px; letter-spacing: 0.5px; text-transform: uppercase; }
+.footer-col p { color: rgba(255, 255, 255, 0.85); font-size: 14px; line-height: 1.6; margin-bottom: 15px; }
+.footer-col a { color: rgba(255, 255, 255, 0.85); text-decoration: none; transition: color 0.2s ease; }
+.footer-col a:hover { color: white; text-decoration: underline; }
+.footer-authors { margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255, 255, 255, 0.2); }
+
+/* ========== АДАПТИВНОСТЬ ========== */
+/* @media (max-width: 1024px) {
+  .page-wrapper { margin: 20px 40px; }
+}
+
+@media (max-width: 768px) {
+  .page-wrapper { margin: 20px 20px; }
+  header { flex-direction: column; text-align: center; }
+  .logo { flex-direction: column; gap: 10px; }
+  .widgets { flex-direction: column; gap: 20px; padding: 20px 25px; }
+  .social-icon { width: 44px; height: 44px; font-size: 22px; }
+  .contact-item { padding: 8px 18px; font-size: 14px; }
+  .footer { margin-top: 60px; padding: 30px 0 20px; }
+  .footer-container { flex-direction: column; gap: 30px; text-align: center; }
+  .footer-logo { justify-content: center; }
+  .footer-col { text-align: center; }
+} */
+
+
+/* ========== СЕКЦИЯ МУЗЕЕВ — ПОЛНЫЙ ДИЗАЙН КАК У ЦЕРКВЕЙ ========== */
+
+/* Фон и отступы секции */
+.museums-section {
+    margin-top: 80px;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(3px);
+    padding: 40px 0 0 20px;
+    color: #fff;
+    isolation: isolate;
+}
+
+/* Заголовок секции */
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 0 0 30px 0;
+    background: linear-gradient(135deg, #FFFFFF, #D4E6FF);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: -0.02em;
+    text-align: center;
+}
+
+/* Слайдер музеев — те же стили, что у церквей */
+.museums-slider {
+    position: relative;
+    width: 100%;
+    overflow: hidden !important;
+    min-height: 700px;
+    height: auto;
+    padding-bottom: 20px;
+}
+
+/* Стрелки музеев — позиция ниже церквей */
+.slider-arrow.museum-arrow-left,
+.slider-arrow.museum-arrow-right {
+    top: 400px !important;
+}
+
+.slider-arrow.museum-arrow-left {
+    left: 30px !important;
+    right: auto !important;
+}
+
+.slider-arrow.museum-arrow-right {
+    right: 30px !important;
+    left: auto !important;
+}
+
+/* Адаптив: скрываем стрелки на мобильных */
+/* ========== FIX: ФУТЕР ДЛЯ <1440px ========== */
+@media (max-width: 1439px) {
+    .footer-container {
+        gap: 20px;
+        padding: 0 15px;
+    }
+    
+    .footer-col {
+        flex: 1 1 30%;
+        min-width: 200px;
+        max-width: 350px;
+    }
+}
+
+/* ========== FIX: АДАПТИВ 1024px — ЛОГО, БЛОКИ, СТРЕЛКИ ========== */
+@media (max-width: 1024px) {
+    /* === Центрирование логотипа и виджетов === */
+    header {
+        justify-content: center;
+        text-align: center;
+    }
+    
+    .logo {
+        justify-content: center;
+        width: 100%;
+    }
+    
+    .widgets {
+        margin: 0 auto;
+        padding: 12px 25px;
+    }
+    
+    /* === Уменьшение отступов основного контента === */
+    .main-content {
+        margin: 30px 40px;
+    }
+    
+    /* === Уменьшение блоков с информацией === */
+    .attraction-info {
+        padding: 18px 20px;
+    }
+    
+    .attraction-info h3 {
+        font-size: 1.2rem;
+        margin-bottom: 12px;
+    }
+    
+    .attraction-info p {
+        font-size: 0.9rem;
+        line-height: 1.5;
+        margin-bottom: 12px;
+    }
+    
+    .attraction-photo,
+    [id^="map-"] {
+        height: 280px;
+        min-height: 280px;
+    }
+    
+    /* === Стрелки: сдвиг внутрь, чтобы не наезжали на изображения === */
+    .slider-arrow {
+        top: 320px !important;
+        width: 48px;
+        height: 48px;
+        font-size: 1.4rem;
+        background: rgba(0, 0, 0, 0.4);
+        border: 2px solid rgba(255, 255, 255, 0.9);
+        z-index: 150 !important;
+    }
+    
+    .slider-arrow:hover {
+        background: rgba(0, 0, 0, 0.6);
+    }
+    
+    .slider-arrow-left {
+        left: 8px !important;
+    }
+    
+    .slider-arrow-right {
+        right: 8px !important;
+    }
+    .attraction-section{
+        /* position: relative !important;
+        padding-top: 10px !important; 
+        margin-top: 30px !important;
+         */
+        padding: 60px !important; 
+    }
+    .museums-section {
+        /* position: relative !important;
+        padding-top: 10px !important; 
+        margin-top: 30px !important;
+         */
+        padding: 80px !important; 
+    }
+    
+    /* === Применяем ко всем секциям слайдеров === */
+    .slider-arrow.museum-arrow-left,
+    .slider-arrow.museum-arrow-right,
+    #real-museums-section .slider-arrow.real-museum-arrow-left,
+    #real-museums-section .slider-arrow.real-museum-arrow-right,
+    #other-section .slider-arrow.other-arrow-left,
+    #other-section .slider-arrow.other-arrow-right,
+    #geo-section .slider-arrow.geo-arrow-left,
+    #geo-section .slider-arrow.geo-arrow-right {
+        top: 320px !important;
+    }
+    
+    /* === Футер: адаптивная сетка === */
+    .footer {
+        margin-top: 60px;
+        padding: 30px 0 20px;
+    }
+    
+    .footer-container {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 25px;
+    }
+    
+    .footer-col {
+        flex: 1 1 45%;
+        min-width: 180px;
+        max-width: 300px;
+        text-align: center;
+    }
+    
+    .footer-logo {
+        justify-content: center;
+    }
+    
+    .footer-authors {
+
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+    }
+}
+
+/* ========== FIX: ДОПОЛНИТЕЛЬНЫЙ АДАПТИВ ДЛЯ 768px (на всякий случай) ========== */
+@media (max-width: 768px) {
+    .footer-col {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+    
+    .slider-arrow {
+        display: none !important;
+    }
+}
+/* ========== FIX: СТРЕЛКИ 768px — ПРАВИЛЬНОЕ ПОЗИЦИОНИРОВАНИЕ ========== */
+@media (max-width: 768px) {
+    
+    /* === 1. Делаем секции относительными контейнерами для стрелок === */
+    .attraction-section,
+    .museums-section {
+        /* position: relative !important;
+        padding-top: 10px !important; 
+        margin-top: 30px !important;
+         */
+        padding: 40px !important; 
+    }
+    
+    /* === 2. Заголовок: компактный, стрелки рядом === */
+    .section-title {
+        font-size: 1.6rem !important;
+        margin: 0 50px 15px 50px !important; /* Отступы по бокам под стрелки */
+        text-align: center !important;
+        line-height: 1.2 !important;
+    }
+    
+    /* === 3. Стрелки: абсолютно внутри секции, рядом с заголовком === */
+    .slider-arrow {
+        display: flex !important;
+        position: absolute !important;
+        /* top: 8px !important;  */
+        width: 36px !important;
+        height: 36px !important;
+        font-size: 1.1rem !important;
+        background: rgba(0, 0, 0, 0.7) !important;
+        border: 2px solid rgba(255, 255, 255, 0.95) !important;
+        border-radius: 50% !important;
+        z-index: 50 !important;
+        transform: none !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+        padding: 0 !important;
+    }
+    
+    /* Левая стрелка */
+    .slider-arrow-left,
+    .museum-arrow-left,
+    .real-museum-arrow-left,
+    .other-arrow-left,
+    .geo-arrow-left,
+    .theater-arrow-left {
+        left: 5px !important;
+        right: auto !important;
+    }
+    
+    /* Правая стрелка */
+    .slider-arrow-right,
+    .museum-arrow-right,
+    .real-museum-arrow-right,
+    .other-arrow-right,
+    .geo-arrow-right,
+    .theater-arrow-right {
+        right: 5px !important;
+        left: auto !important;
+    }
+    
+    .slider-arrow:hover {
+        background: rgba(0, 0, 0, 0.9) !important;
+        transform: scale(1.05) !important;
+    }
+    
+    /* === 4. Конкретные фиксы для последних трёх слайдеров === */
+    
+    /* Музеи (реальные) */
+    #real-museums-section {
+        position: relative !important;
+    }
+    #real-museums-section .slider-arrow.real-museum-arrow-left {
+        left: 5px !important;
+    }
+    #real-museums-section .slider-arrow.real-museum-arrow-right {
+        right: 5px !important;
+    }
+    
+    /* Другие достопримечательности */
+    #other-section {
+        position: relative !important;
+    }
+    #other-section .slider-arrow.other-arrow-left {
+        left: 5px !important;
+    }
+    #other-section .slider-arrow.other-arrow-right {
+        right: 5px !important;
+    }
+    
+    /* Гео и транспорт */
+    #geo-section {
+        position: relative !important;
+    }
+    #geo-section .slider-arrow.geo-arrow-left {
+        left: 5px !important;
+    }
+    #geo-section .slider-arrow.geo-arrow-right {
+        right: 5px !important;
+    }
+    
+    /* Театры */
+    #theaters-section {
+        position: relative !important;
+    }
+    /* #theaters-section .slider-arrow.theater-arrow {
+        top: 8px !important;
+    } */
+    
+    /* === 5. Компактный контент слайдов === */
+    .attraction-content {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+        margin-bottom: 20px !important;
+    }
+    
+    .attraction-photo,
+    [id^="map-"] {
+        height: 220px !important;
+        min-height: 220px !important;
+        border-radius: 10px !important;
+    }
+    
+    .attraction-info {
+        padding: 12px 15px !important;
+        border-radius: 12px !important;
+        /* max-height: 350px !important; */
+        font-size: 0.85rem !important;
+        line-height: 1.4 !important;
+    }
+    
+    .attraction-info h3 {
+        font-size: 1.1rem !important;
+        margin-bottom: 8px !important;
+    }
+    
+    .attraction-info p {
+        margin-bottom: 8px !important;
+    }
+    
+    /* === 6. Хедер и футер — финальная компактность === */
+    .main-content {
+        margin: 10px 15px !important;
+    }
+    
+    header {
+        flex-direction: column !important;
+        gap: 12px !important;
+    }
+    
+    .logo {
+        flex-direction: column !important;
+        gap: 6px !important;
+    }
+    
+    .widgets {
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 10px !important;
+        padding: 8px 15px !important;
+        border-radius: 20px !important;
+    }
+    
+    .social-icon {
+        width: 38px !important;
+        height: 38px !important;
+        font-size: 18px !important;
+    }
+    
+    .footer {
+        margin-top: 30px !important;
+        padding: 20px 10px 15px !important;
+    }
+    
+    .footer-container {
+        flex-direction: column !important;
+        gap: 15px !important;
+        text-align: center !important;
+        padding: 0 10px !important;
+    }
+    
+    .footer-col {
+        flex: 1 1 100% !important;
+    }
+    
+    .footer-logo {
+        justify-content: center !important;
+        gap: 10px !important;
+    }
+    
+    .footer-gerb {
+        width: 40px !important;
+    }
+    
+    .footer-col h4 {
+        font-size: 14px !important;
+        margin-bottom: 10px !important;
+    }
+    
+    .footer-col p,
+    .footer-col a {
+        font-size: 13px !important;
+    }
+}
+/* ========== FIX: 768px — ЦЕНТРОВКА ГЕРО-ИЗОБРАЖЕНИЯ + СТРЕЛКИ ЦЕРКВЕЙ ========== */
+
+/* === 1. Центрирование самого изображения в геро-секции === */
+@media (max-width: 768px) {
+    /* .hero-background {
+        left: 0 !important;
+        right: 0 !important;
+        top: 0 !important;
+        bottom: 0 !important;
+    } */
+    
+    .hero-background img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        object-position: center center !important;
+    }
+}
+
+/* === 2. Фикс стрелок для СЕКЦИИ ЦЕРКВЕЙ (.attraction-section) на 768px === */
+@media (max-width: 768px) {
+    
+    /* Делаем секцию церквей относительным контейнером */
+    .attraction-section {
+        position: relative !important;
+        padding-top: 15px !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+    
+    /* Переопределяем display: none для стрелок в этой секции */
+    .attraction-section .slider-arrow {
+        display: flex !important;
+        position: absolute !important;
+        top: 10px !important;
+        width: 38px !important;
+        height: 38px !important;
+        font-size: 1.1rem !important;
+        background: rgba(0, 0, 0, 0.75) !important;
+        border: 2px solid rgba(255, 255, 255, 0.95) !important;
+        border-radius: 50% !important;
+        z-index: 70 !important;
+        transform: none !important;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4) !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    
+    /* Левая стрелка церквей — чётко слева */
+    .attraction-section .slider-arrow.slider-arrow-left,
+    .attraction-section .slider-arrow-left {
+        left: 10px !important;
+        right: auto !important;
+    }
+    
+    /* Правая стрелка церквей — чётко справа */
+    .attraction-section .slider-arrow.slider-arrow-right,
+    .attraction-section .slider-arrow-right {
+        right: 10px !important;
+        left: auto !important;
+    }
+    
+    /* Отступ у заголовка, чтобы текст не наезжал на стрелки */
+    .attraction-section .section-title {
+        margin: 0 48px 15px 48px !important;
+        font-size: 1.55rem !important;
+    }
+    
+    /* === 3. Универсальный фикс: гарантируем, что ВСЕ секции имеют position: relative === */
+    .attraction-section,
+    .museums-section,
+    #real-museums-section,
+    #other-section,
+    #geo-section,
+    #theaters-section {
+        position: relative !important;
+    }
+    
+    /* === 4. Финальная проверка: стрелки не должны быть hidden или none === */
+
+}
+/* ========== АДАПТИВ: 425px — МИНИ-ИНТЕРФЕЙС ========== */
+@media (max-width: 425px) {
+    
+    /* === Геро-секция === */
+    .hero-title {
+        font-size: 2rem !important;
+        letter-spacing: 0.05em !important;
+        padding: 0 8px !important;
+    }
+    
+    .hero-arrow {
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 1.3rem !important;
+        bottom: 25px !important;
+    }
+    
+    /* === Хедер === */
+    .main-content { margin: 8px 10px !important; }
+    
+    header { gap: 8px !important; }
+    
+    .logo { gap: 5px !important; }
+    .img1 { width: 42px !important; }
+    h1 { font-size: 1.4rem !important; }
+    
+    .widgets {
+        padding: 8px 12px !important;
+        gap: 8px !important;
+        border-radius: 18px !important;
+    }
+    
+    .social-icon {
+        width: 34px !important;
+        height: 34px !important;
+        font-size: 16px !important;
+        border-radius: 10px !important;
+    }
+    
+    .social-icon.socials-tg svg,
+    .social-icon.socials-odnokl svg { width: 20px !important; height: 20px !important; }
+    .social-icon.socials-MAX svg { width: 24px !important; height: 24px !important; }
+    
+    /* === Кнопки эпох === */
+    .times-container { margin: 10px auto 15px !important; }
+    .time-block {
+        padding: 8px 16px !important;
+        font-size: 13px !important;
+    }
+    
+    /* === Секции слайдеров === */
+    .attraction-section,
+    .museums-section {
+        padding: 35px 8px 15px 8px !important;
+        margin-top: 20px !important;
+    }
+    
+    .section-title {
+        font-size: 1.4rem !important;
+        margin: 0 40px 12px 40px !important;
+    }
+    
+    /* === СТРЕЛКИ: мини, но видимые === */
+    .slider-arrow {
+        display: flex !important;
+        position: absolute !important;
+        top: 8px !important;
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 0.95rem !important;
+        background: rgba(0, 0, 0, 0.8) !important;
+        border: 2px solid rgba(255, 255, 255, 0.95) !important;
+        border-radius: 50% !important;
+        z-index: 80 !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5) !important;
+    }
+    
+    .attraction-section .slider-arrow-left,
+    .museums-section .slider-arrow.museum-arrow-left,
+    #real-museums-section .slider-arrow.real-museum-arrow-left,
+    #other-section .slider-arrow.other-arrow-left,
+    #geo-section .slider-arrow.geo-arrow-left,
+    #theaters-section .slider-arrow.museum-arrow-left {
+        left: 6px !important;
+        right: auto !important;
+    }
+    
+    .attraction-section .slider-arrow-right,
+    .museums-section .slider-arrow.museum-arrow-right,
+    #real-museums-section .slider-arrow.real-museum-arrow-right,
+    #other-section .slider-arrow.other-arrow-right,
+    #geo-section .slider-arrow.geo-arrow-right,
+    #theaters-section .slider-arrow.museum-arrow-right {
+        right: 6px !important;
+        left: auto !important;
+    }
+    
+    /* === Контент слайда === */
+    .attraction-content { gap: 12px !important; }
+    
+    .attraction-photo,
+    [id^="map-"] {
+        height: 200px !important;
+        min-height: 200px !important;
+        border-radius: 10px !important;
+    }
+    
+    .attraction-info {
+        padding: 12px !important;
+        font-size: 0.82rem !important;
+        line-height: 1.45 !important;
+        border-radius: 12px !important;
+        max-height: none !important;
+        overflow-y: visible !important;
+        height: auto !important;
+    }
+    
+    .attraction-info h3 {
+        font-size: 1.05rem !important;
+        margin-bottom: 8px !important;
+    }
+    
+    .attraction-info p { margin-bottom: 8px !important; }
+    
+    /* === Слайдер === */
+    .attractions-slider,
+    .museums-slider {
+        min-height: auto !important;
+        padding-bottom: 25px !important;
+    }
+    
+    .slide.active { height: auto !important; }
+    
+    /* === Футер === */
+    .footer {
+        margin-top: 20px !important;
+        padding: 18px 8px 12px !important;
+    }
+    
+    .footer-container {
+        gap: 12px !important;
+        padding: 0 5px !important;
+    }
+    
+    .footer-col h4 { font-size: 12px !important; }
+    .footer-col p,
+    .footer-col a { font-size: 11px !important; }
+    
+    .footer-gerb { width: 34px !important; }
+    .footer-logo span { font-size: 16px !important; }
+    
+    .footer-copyright { font-size: 10px !important; }
+}
+
+/* ========== АДАПТИВ: 375px — УЛЬТРА-КОМПАКТ ========== */
+@media (max-width: 375px) {
+    
+    /* === Геро === */
+    .hero-title { font-size: 1.85rem !important; }
+    .hero-arrow {
+        width: 36px !important;
+        height: 36px !important;
+        font-size: 1.2rem !important;
+    }
+    
+    /* === Хедер === */
+    .img1 { width: 38px !important; }
+    h1 { font-size: 1.3rem !important; }
+    
+    .widgets {
+        padding: 7px 10px !important;
+        gap: 6px !important;
+    }
+    
+    .social-icon {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 15px !important;
+    }
+    
+    /* === Кнопки эпох === */
+    .time-block {
+        padding: 7px 14px !important;
+        font-size: 12px !important;
+    }
+    
+    /* === Секции === */
+    .attraction-section,
+    .museums-section {
+        padding: 32px 6px 12px 6px !important;
+    }
+    
+    .section-title {
+        font-size: 1.3rem !important;
+        margin: 0 36px 10px 36px !important;
+    }
+    
+    /* === СТРЕЛКИ: ещё компактнее === */
+    .slider-arrow {
+        top: 6px !important;
+        width: 30px !important;
+        height: 30px !important;
+        font-size: 0.9rem !important;
+    }
+    
+    .attraction-section .slider-arrow-left,
+    .museums-section .slider-arrow.museum-arrow-left,
+    #real-museums-section .slider-arrow.real-museum-arrow-left,
+    #other-section .slider-arrow.other-arrow-left,
+    #geo-section .slider-arrow.geo-arrow-left,
+    #theaters-section .slider-arrow.museum-arrow-left {
+        left: 5px !important;
+    }
+    
+    .attraction-section .slider-arrow-right,
+    .museums-section .slider-arrow.museum-arrow-right,
+    #real-museums-section .slider-arrow.real-museum-arrow-right,
+    #other-section .slider-arrow.other-arrow-right,
+    #geo-section .slider-arrow.geo-arrow-right,
+    #theaters-section .slider-arrow.museum-arrow-right {
+        right: 5px !important;
+    }
+    
+    /* === Контент === */
+    .attraction-photo,
+    [id^="map-"] {
+        height: 190px !important;
+        min-height: 190px !important;
+    }
+    
+    .attraction-info {
+        padding: 10px !important;
+        font-size: 0.8rem !important;
+    }
+    
+    .attraction-info h3 { font-size: 1rem !important; }
+    
+    /* === Футер === */
+    .footer { padding: 16px 6px 10px !important; }
+    .footer-gerb { width: 32px !important; }
+    .footer-logo span { font-size: 15px !important; }
+    .footer-col h4 { font-size: 11px !important; }
+    .footer-col p,
+    .footer-col a { font-size: 10px !important; }
+}
+
+/* ========== АДАПТИВ: 325px — МИНИМАЛЬНЫЙ === */
+@media (max-width: 325px) {
+    
+    /* === Геро === */
+    .hero-title {
+        font-size: 1.7rem !important;
+        line-height: 1.1 !important;
+    }
+    
+    .hero-arrow {
+        width: 34px !important;
+        height: 34px !important;
+        font-size: 1.1rem !important;
+        bottom: 20px !important;
+    }
+    
+    /* === Хедер === */
+    .main-content { margin: 6px 8px !important; }
+    
+    .img1 { width: 34px !important; }
+    h1 { font-size: 1.2rem !important; }
+    
+    .widgets {
+        padding: 6px 8px !important;
+        gap: 5px !important;
+        flex-direction: row !important;
+        justify-content: center !important;
+    }
+    
+    .social-icon {
+        width: 30px !important;
+        height: 30px !important;
+        font-size: 14px !important;
+        border-radius: 9px !important;
+    }
+    
+    .social-icon.socials-tg svg,
+    .social-icon.socials-odnokl svg { width: 18px !important; height: 18px !important; }
+    .social-icon.socials-MAX svg { width: 22px !important; height: 22px !important; }
+    
+    /* === Кнопки эпох === */
+    .times-container {
+        margin: 8px auto 12px !important;
+        flex-wrap: wrap !important;
+    }
+    
+    .time-block {
+        padding: 6px 12px !important;
+        font-size: 11px !important;
+    }
+    
+    /* === Секции === */
+    .attraction-section,
+    .museums-section {
+        padding: 28px 4px 10px 4px !important;
+        margin-top: 15px !important;
+    }
+    
+    .section-title {
+        font-size: 1.2rem !important;
+        margin: 0 32px 8px 32px !important;
+        line-height: 1.15 !important;
+    }
+    
+    /* === СТРЕЛКИ: микро, но рабочие === */
+    .slider-arrow {
+        display: flex !important;
+        position: absolute !important;
+        top: 4px !important;
+        width: 28px !important;
+        height: 28px !important;
+        font-size: 0.85rem !important;
+        background: rgba(0, 0, 0, 0.85) !important;
+        border: 2px solid rgba(255, 255, 255, 0.95) !important;
+        border-radius: 50% !important;
+        z-index: 90 !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5) !important;
+        padding: 0 !important;
+    }
+    
+    /* Левая/правая — все секции */
+    [class*="arrow-left"] { left: 4px !important; right: auto !important; }
+    [class*="arrow-right"] { right: 4px !important; left: auto !important; }
+    
+    /* === Контент слайда === */
+    .attraction-content { gap: 10px !important; }
+    
+    .attraction-photo,
+    [id^="map-"] {
+        height: 175px !important;
+        min-height: 175px !important;
+        border-radius: 8px !important;
+    }
+    
+    .attraction-info {
+        padding: 9px 10px !important;
+        font-size: 0.78rem !important;
+        line-height: 1.4 !important;
+        border-radius: 10px !important;
+        max-height: none !important;
+        overflow-y: visible !important;
+        height: auto !important;
+    }
+    
+    .attraction-info h3 {
+        font-size: 0.95rem !important;
+        margin-bottom: 6px !important;
+    }
+    
+    .attraction-info p { margin-bottom: 6px !important; }
+    
+    /* === Слайдер === */
+    .attractions-slider,
+    .museums-slider {
+        min-height: auto !important;
+        padding-bottom: 20px !important;
+    }
+    
+    .slide.active {
+        position: relative !important;
+        height: auto !important;
+    }
+    
+    /* === Футер === */
+    .footer {
+        margin-top: 15px !important;
+        padding: 14px 4px 8px !important;
+    }
+    
+    .footer-container {
+        gap: 10px !important;
+        padding: 0 3px !important;
+    }
+    
+    .footer-gerb { width: 30px !important; }
+    .footer-logo { gap: 8px !important; }
+    .footer-logo span { font-size: 14px !important; }
+    
+    .footer-col h4 {
+        font-size: 10px !important;
+        margin-bottom: 6px !important;
+    }
+    
+    .footer-col p,
+    .footer-col a {
+        font-size: 9px !important;
+        line-height: 1.4 !important;
+    }
+    
+    .footer-copyright { font-size: 9px !important; }
+    .footer-authors {
+        margin-top: 6px !important;
+        padding-top: 6px !important;
+        gap: 2px !important;
+    }
+    
+    /* === Предотвращаем горизонтальный скролл === */
+    * { box-sizing: border-box !important; }
+    body, html { overflow-x: hidden !important; }
+}
+
+/* ========== ФИНАЛЬНЫЙ ФИКС: гарантируем видимость стрелок на всех мобильных === */
+@media (max-width: 425px) {
+    /* Переопределяем любые display: none для стрелок */
+    .slider-arrow:not(.hidden) {
+        display: flex !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        visibility: visible !important;
+    }
+    
+    /* Гарантируем position: relative у всех секций */
+    .attraction-section,
+    .museums-section,
+    #real-museums-section,
+    #other-section,
+    #geo-section,
+    #theaters-section {
+        position: relative !important;
+    }
+}
+/* ========== FIX: ИКОНКИ CONTACTS — АДАПТИВ ДЛЯ МОБИЛЬНЫХ ========== */
+
+/* 425px — уменьшаем до 32px */
+@media (max-width: 425px) {
+    .contacts .social-icon img {
+        width: 32px !important;
+        height: 32px !important;
+        min-width: 32px !important;
+        min-height: 32px !important;
+    }
+    
+    .contacts .social-icon {
+        width: 34px !important;
+        height: 34px !important;
+        padding: 0 !important;
+    }
+}
+
+/* 375px — уменьшаем до 30px */
+@media (max-width: 375px) {
+    .contacts .social-icon img {
+        width: 30px !important;
+        height: 30px !important;
+        min-width: 30px !important;
+        min-height: 30px !important;
+    }
+    
+    .contacts .social-icon {
+        width: 32px !important;
+        height: 32px !important;
+    }
+}
+
+/* 325px — уменьшаем до 26px */
+@media (max-width: 325px) {
+    .contacts .social-icon img {
+        width: 26px !important;
+        height: 26px !important;
+        min-width: 26px !important;
+        min-height: 26px !important;
+    }
+    
+    .contacts .social-icon {
+        width: 28px !important;
+        height: 28px !important;
+        border-radius: 8px !important;
+    }
+    
+    /* Компенсируем уменьшение иконок отступами в widgets */
+    .widgets {
+        gap: 6px !important;
+    }
+}
+
+/* ========== ФИНАЛЬНЫЙ ФИКС: гарантируем, что img не вылезает за кнопки ========== */
+@media (max-width: 425px) {
+    .contacts .social-icon {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        overflow: hidden !important;
+        flex-shrink: 0 !important;
+    }
+    
+    .contacts .social-icon img {
+        object-fit: contain !important;
+        display: block !important;
+    }
+}

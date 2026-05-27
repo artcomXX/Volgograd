@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Сталинград</title>
+	<link rel="stylesheet" type="text/css" href="st.css">
+	<link rel="icon" type="image/x-icon" href="../images/Gerb.svg">
+	<script src="st.js" defer></script>
+	<script src="https://unpkg.com/ionicons@4.1.2/dist/ionicons.js"></script>
+</head>
+
+<body>
+	<div class="page-wrapper">
+	<div class="main-content">
+		<header>
+			<div class="logo">
+				<img src="../images/Gerb.svg" class="img1" alt="Герб">
+				<h1>Сталинград</h1>
+			</div>
+
+<div class="header-player">
+    
+    <div class="player-track-full">
+        <span id="headerTrackName">Вега П-410С</span>
+    </div>
+    
+    <div class="player-progress-bar" onclick="seekHeader(event)">
+        <div class="progress-fill" id="headerProgress"></div>
+    </div>
+    
+    <div class="player-controls-row">
+        <div class="player-controls-compact">
+            <button class="player-btn" onclick="prevTrack()" title="Предыдущий">
+                <svg class="icon-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M12 21c4.969 0 9-4.031 9-9s-4.031-9-9-9-9 4.031-9 9 4.031 9 9 9Z" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="m5.495 11.563 5.365-3.241a.505.505 0 0 1 .765.436v2.5l4.86-2.936a.505.505 0 0 1 .765.436v6.481a.505.505 0 0 1-.765.437l-4.86-2.936v2.5a.505.505 0 0 1-.765.436l-5.365-3.241a.51.51 0 0 1 0-.872Z" fill="currentColor" stroke="none"/>
+                </svg>
+            </button>
+            
+            <button class="player-btn play-btn" onclick="togglePlay()" id="headerPlayBtn" title="Воспроизвести/Пауза">
+                <svg class="icon-svg icon-play" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M21 12c0-4.969-4.031-9-9-9s-9 4.031-9 9 4.031 9 9 9 9-4.031 9-9Z" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="m10.14 15.676 5.365-3.241a.511.511 0 0 0 0-.872L10.14 8.322a.505.505 0 0 0-.765.436v6.481a.505.505 0 0 0 .765.437Z" fill="currentColor" stroke="none"/>
+                </svg>
+                <svg class="icon-svg icon-pause" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display:none">
+                    <path d="M21 12c0-4.969-4.031-9-9-9s-9 4.031-9 9 4.031 9 9 9 9-4.031 9-9Z" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                    <g fill="currentColor" stroke="none">
+                        <rect x="8" y="7" width="2.5" height="10" rx="0.5"/>
+                        <rect x="13.5" y="7" width="2.5" height="10" rx="0.5"/>
+                    </g>
+                </svg>
+            </button>
+            
+            <button class="player-btn" onclick="nextTrack()" title="Следующий">
+                <svg class="icon-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M21 12c0-4.969-4.031-9-9-9s-9 4.031-9 9 4.031 9 9 9 9-4.031 9-9Z" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M18.505 11.563 13.14 8.322a.505.505 0 0 0-.765.436v2.5l-4.86-2.936a.505.505 0 0 0-.765.436v6.481a.505.505 0 0 0 .765.437l4.86-2.936v2.5a.505.505 0 0 0 .765.436l5.365-3.241a.511.511 0 0 0 0-.872Z" fill="currentColor" stroke="none"/>
+                </svg>
+            </button>
+            
+            <div class="volume-wrapper">
+                <button class="player-btn" onclick="toggleVolumeSlider()" id="volumeBtn" title="Громкость">
+                    <svg class="icon-svg icon-volume" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M11 5 6 9H2v6h4l5 4V5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                        <path d="M15.54 8.46a5 5 0 0 1 0 7.07" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                    <svg class="icon-svg icon-volume-mute" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display:none">
+                        <path d="M11 5 6 9H2v6h4l5 4V5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                        <line x1="23" y1="9" x2="17" y2="15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        <line x1="17" y1="9" x2="23" y2="15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                </button>
+                <div class="volume-slider-wrapper" id="volumeSliderWrapper">
+                    <input type="range" min="0" max="100" value="70" class="volume-slider" 
+                           id="headerVolumeSlider" oninput="setVolume(this.value)">
+                </div>
+            </div>
+        </div>
+        
+        <select class="track-select" id="trackSelect" onchange="selectTrack(this.value)">
+            <option value="">Выберите музыкальную композицию</option>
+        </select>
+    </div>
+</div>
+		</header>
+
+		<div class="times-container">
+			<a href="../index.html" style="text-decoration: none; color: inherit;">
+				<div class="time-block time-blue faded">Волгоград</div>
+			</a>
+			<div class="time-block time-red active">Сталинград</div>
+			<a href="tsaritsyn.html" style="text-decoration: none; color: inherit;">
+				<div class="time-block time-white faded">Царицын</div>
+			</a>
+		</div>
+		
+<div class="stalingrad-content">
+<div class="top-section-row">
+    <div class="left-content">
+
+	<div class="slogan-block slogan-hero">
+		<h2 class="stalingrad-title">Мы отстояли тебя в огне, Сталинград!</h2>
+		<p class="stalingrad-text">
+			Мы возродим тебя в труде!<br>
+			Превратим город-фронт в город-сад!
+		</p>
+	</div>
+
+<div class="battle-stats-simple">
+    <h4 class="stats-title">Масштаб сражения</h4>
+    
+    <p class="stats-text">
+        На территории почти в <strong>100 000 км²</strong> с обеих сторон участвовало свыше <strong>2 миллионов человек</strong>, до 2 000 танков, более 2 000 самолётов и до 26 000 орудий и миномётов.
+    </p>
+    
+    <h5 class="stats-subtitle">Уничтожены вражеские:</h5>
+    <ul class="stats-list">
+        <li>пять вражеских армий — две немецкие, две румынские и одну итальянскую</li>
+        <li>живые силы: до <strong>1,5 миллиона человек</strong> убитыми, ранеными и пленными</li>
+        <li>техника: до 4 400 самолётов, около 2 000 танков, свыше 10 000 орудий и миномётов, десятки тысяч автомобилей и бронетехники</li>
+    </ul>
+    
+    <h5 class="stats-subtitle">Взяты в плен:</h5>
+    <p class="stats-text">
+        В «котле» капитулировали свыше <strong>2 500 офицеров</strong> и <strong>24 генерала</strong> во главе с фельдмаршалом Паулюсом.
+    </p>
+    
+    <h5 class="stats-subtitle losses-title">Наши потери:</h5>
+    <ul class="stats-list losses-list">
+        <li>погибли <strong>478 741</strong> советских воинов, санитарные потери превысили <strong>650 000</strong></li>
+        <li>утрачено <strong>4 431</strong> танков</li>
+        <li><strong>15 728</strong> артиллерийских орудий</li>
+        <li><strong>2 769</strong> боевых самолётов</li>
+        <li><strong>524 800</strong> единиц стрелкового вооружения</li>
+    </ul>
+</div>
+    </div>
+
+    <!-- Плакаты справа -->
+    <div class="posters-block">
+        <div class="poster-item">
+            <img src="campaigning/stalingradTverdina.png" alt="Сталинградская твердыня">
+        </div>
+        <div class="poster-item">
+            <img src="campaigning/ChtoTiSdelal.png" alt="Что ты сделал для восстановления Сталинграда">
+        </div>
+    </div>
+</div>
+
+    <div class="content-row-full">
+        <div class="text-block-full">
+            <h3 class="stalingrad-subtitle">Товарищи!</h3>
+            <p class="stalingrad-text-large">
+                Враг превратил наш цветущий дом в пепел. <strong>98% жилого фонда разрушено.</strong><br><br>
+                Но гвардейцы труда — каменщики, инженеры, чернорабочие — уже дают первую продукцию:<br>
+                <strong>Тракторный завод ожил, «Красный Октябрь» дает металл.</strong><br><br>
+                Мы помним: <span class="highlight">каждый восстановленный дом — это снаряд по послевоенной разрухе!</span>
+            </p>
+        </div>
+    </div>
+</div>
+	
+<div class="newspaper-section">
+    <div class="newspaper-container">
+        
+
+        <article class="newspaper-article">
+            <div class="article-visual">
+                <div class="article-image">
+                    <img src="campaigning/Bimbaf.jpeg" alt="Завод Красный Октябрь">
+                </div>
+                <div class="article-content">
+                    <p class="article-text">
+                        Вчера, 31 марта 1945 года на заводе «Красный Октябрь» произошел подрыв неразорвавшейся бомбы при погрузке. <strong>Товарищи! Срочно нужны руки для восстановления производства!</strong>
+                    </p>
+                </div>
+            </div>
+        </article>
+
+        <article class="newspaper-article">
+            <div class="article-visual">
+                <div class="article-image">
+                    <img src="campaigning/Brigada chirkasov.jpeg" alt="Черкасовское движение">
+                </div>
+                <div class="article-content">
+                    <p class="article-text">
+                        <strong>Товарищи! Присоединяйтесь к Черкасовскому движению!</strong> Совместными силами мы отстояли Сталинград и восстановим его во что бы то ни стало! <strong>Обращайтесь в профсоюзы и райкомы! Присоединяйтесь!</strong>
+                    </p>
+                </div>
+            </div>
+        </article>
+
+        <article class="newspaper-article">
+            <div class="article-visual">
+                <div class="article-image">
+                    <img src="campaigning/RabRyki.jpeg" alt="Требуются рабочие руки">
+                </div>
+                <div class="article-content">
+                    <p class="article-text">
+                        <strong>Требуются рабочие руки!</strong>
+                        Штукатуры, столяры, сварщики, чернорабочие! Любые свободные руки найдут место в нашем правом деле!
+                    </p>
+                </div>
+            </div>
+        </article>
+
+        <article class="newspaper-article newspaper-wide">
+            <div class="article-visual">
+                <div class="article-image">
+                    <img src="campaigning/AvokianArch.jpeg" alt="Проект Акопяна">
+                </div>
+                <div class="article-content">
+                    <p class="article-text">
+                        Проект Акопяна по восстановлению города победил! <strong>Сталинград будет величествен в вашем труде!</strong>
+                    </p>
+                </div>
+            </div>
+        </article>
+
+    </div>
+</div>
+		
+		</div>
+
+		<footer class="footer">
+			<div class="footer-container">
+
+				<div class="footer-col">
+					<div class="footer-logo">
+						<img src="../images/Gerb.svg" class="footer-gerb" alt="Герб">
+						<span>Сталинград</span>
+					</div>
+					<div class="footer-copyright">
+						© 1945 ГОСУДАРСТВЕННЫЙ КОМИТЕТ <br>СТАЛИНГРАДСКОГО ГОРОДСКОГО СОВЕТА<br> ДЕПУТАТОВ ТРУДЯЩИХСЯ <br> ГОРИСПОЛКОМ
+					</div>
+				</div>
+
+
+				<div class="footer-col">
+					<h4>О ПРОЕКТЕ</h4>
+					<p>Расположение Сталинграда:<br>48°42′ с. ш. 44°31′ в. д.</p>
+					<p class="footer-authors">Составители:<br><a href="#">Товарищ Рябцев А. Е.</a> <br> <a href="#">Товарищ Затонский И.Д.</a> <br> <a href="#">Товарищ Наумкенков А.В.</a></p>
+				</div>
+
+				<div class="footer-col">
+					<h4>ДЛЯ СВЯЗИ</h4>
+					<p>
+						 Телефон администрации:<br>
+						<a href="tel:+78442200000">№ 1-15</a>
+					</p>
+					<p class="footer-authors">
+						 Адрес администрации:<br>
+						<a href="mailto:info@volgadmin.ru">Площадь Павших Борцов дом №1</a>
+					</p>
+				</div>
+			</div>
+		</footer>
+	</div>
+</body>
+</html>
