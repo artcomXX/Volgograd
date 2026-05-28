@@ -513,7 +513,7 @@ h1 {
     background: rgba(201, 169, 97, 0.3);
     border-radius: 4px;
     outline: none;
-    -webkit-appearance: none;
+    /* -webkit-appearance: none; */
     margin: 0;
 }
 
@@ -779,5 +779,911 @@ h1 {
     }
     #currentTrackDisplay {
         font-size: 0.75rem;
+    }
+}
+
+/* ========== СЕКЦИЯ АГИТАЦИОННЫХ ПЛАКАТОВ ЦАРИЦЫНА ========== */
+/* ========== СЕКЦИЯ АГИТАЦИОННЫХ ПЛАКАТОВ ЦАРИЦЫНА ========== */
+.tsaritsyn-campaign {
+    margin: 0px auto;
+    max-width: 1400px;
+    padding: 0 20px;
+}
+
+.campaign-container {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+
+.campaign-block {
+    display: flex;
+    gap: 40px;
+    align-items: stretch;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+/* Первый блок - текст слева, фото справа */
+.red-campaign {
+    flex-direction: row;
+    background: rgba(74, 74, 74, 0.7);
+}
+
+/* Второй блок - фото слева, текст справа */
+.white-campaign {
+    flex-direction: row;
+    /* background: #4A4A4A; */
+}
+
+/* Рамка для плаката (общая) */
+.poster-frame {
+    flex: 0 0 650px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Рамка для плаката слева (для второго блока) */
+.poster-frame-left {
+    flex: 0 0 555px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.campaign-poster {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* Текст для первого блока */
+.campaign-text {
+    flex: 1;
+    padding: 40px ;
+    display: flex;
+    align-items: center;
+    background: rgba(92, 39, 35, 0.8);
+}
+
+/* Текст для второго блока (серый фон, белый текст) */
+.campaign-text-gray {
+    flex: 1;
+    padding: 30px  30px 0 40px;
+    display: flex;
+    align-items: center;
+    background: rgba(74,74,74, 0.8);
+}
+
+.text-content {
+    max-width: 100%;
+    width: 100%;
+}
+
+/* Заголовок "Товарищи!" */
+.campaign-title-red {
+    font-family: 'Oswald', 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: #C41E3A;
+    margin-bottom: 25px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-bottom: 2px solid #C41E3A;
+    padding-bottom: 10px;
+}
+
+/* Текст для первого блока */
+.campaign-body {
+    font-family: 'Playfair Display', 'Times New Roman', serif;
+    font-size: 16px;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.campaign-body p {
+    margin-bottom: 20px;
+    text-align: justify;
+}
+
+.campaign-body .highlight {
+    color: #C9A961;
+    font-weight: 600;
+    font-size: 18px;
+    text-align: center;
+    margin: 30px 0;
+    padding: 15px;
+    background: rgba(201, 169, 97, 0.1);
+    border-left: 4px solid #C9A961;
+    border-right: 4px solid #C9A961;
+}
+
+.campaign-body .urgent {
+    color: #D4AF37;
+    font-weight: 600;
+    font-size: 17px;
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(196, 30, 58, 0.15);
+    border: 2px solid rgba(196, 30, 58, 0.4);
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* Белый текст для второго блока */
+.campaign-body-white {
+    font-family: 'Playfair Display', 'Times New Roman', serif;
+    font-size: 17px;
+    line-height: 1.9;
+    color: #FFFFFF;
+}
+
+.campaign-body-white p {
+    margin-bottom: 0;
+    text-indent: 0px;
+}
+
+/* Адаптивность */
+@media (max-width: 1024px) {
+    .campaign-block {
+        flex-direction: column !important;
+    }
+    
+    .poster-frame,
+    .poster-frame-left {
+        flex: none;
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .campaign-text,
+    .campaign-text-gray {
+        padding: 30px;
+    }
+    
+    .campaign-title-red {
+        font-size: 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .tsaritsyn-campaign {
+        margin: 40px auto;
+        padding: 0 15px;
+    }
+    
+    .campaign-container {
+        gap: 40px;
+    }
+    
+    .campaign-block {
+        border-radius: 12px;
+    }
+    
+    .poster-frame,
+    .poster-frame-left {
+        padding: 15px;
+    }
+    
+    .campaign-text,
+    .campaign-text-gray {
+        padding: 25px;
+    }
+    
+    .campaign-title-red {
+        font-size: 36px;
+    }
+    
+    .campaign-body,
+    .campaign-body-white {
+        font-size: 15px;
+        line-height: 1.7;
+    }
+    
+    .campaign-body-white p {
+        text-indent: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .campaign-title-red {
+        font-size: 32px;
+    }
+    
+    .campaign-body,
+    .campaign-body-white {
+        font-size: 14px;
+    }
+}
+
+/* ========== ПОЛНОШИРИННОЕ ИЗОБРАЖЕНИЕ ========== */
+.fullwidth-poster {
+    width: 100%;
+    margin: 40px 0;
+    border-radius: 16px;
+    overflow: hidden;
+    /* box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4); */
+    padding: 0 80px;
+}
+
+.fullwidth-poster img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 16px;
+}
+
+@media (max-width: 768px) {
+    .fullwidth-poster {
+        margin: 30px 0;
+        border-radius: 12px;
+    }
+    
+    .fullwidth-poster img {
+        border-radius: 12px;
+    }
+}
+/* ========== ДВА ИНФОРМАЦИОННЫХ БЛОКА ========== */
+.info-blocks-container {
+    display: flex;
+    gap: 30px;
+    margin: 50px 0;
+    padding: 0 20px;
+}
+
+/* Левый блок - меньше (35%) */
+.news-block {
+    flex: 0 0 35%;
+    background: rgba(74, 74, 74, 0.6);
+    border-radius: 16px;
+    padding: 30px;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(201, 169, 97, 0.2);
+}
+
+/* Правый блок - больше (оставшееся пространство) */
+.ads-block {
+    flex: 1;
+    background: rgba(74, 74, 74, 0.6);
+    border-radius: 16px;
+    padding: 30px;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(201, 169, 97, 0.2);
+}
+
+.info-content {
+    font-family: 'Playfair Display', 'Times New Roman', serif;
+    font-size: 18px;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.9);
+    /* text-align: justify; */
+}
+
+.info-content p {
+    margin-bottom: 20px;
+}
+
+.info-content p:first-child {
+    text-indent: 0;
+}
+
+.info-content strong {
+    color: #C9A961;
+    font-weight: 600;
+}
+
+/* Выделение даты */
+.highlight-date {
+    color: #C9A961;
+    font-weight: 700;
+    font-size: 20px;
+    padding-bottom: 2px;
+}
+
+.ad-separator {
+    text-align: center;
+    color: #C9A961;
+    margin: 25px 0 !important;
+    text-indent: 0 !important;
+    font-size: 14px;
+    letter-spacing: 8px;
+}
+
+/* Адаптивность */
+@media (max-width: 900px) {
+    .info-blocks-container {
+        flex-direction: column;
+        gap: 20px;
+        padding: 0 15px;
+    }
+    
+    .news-block,
+    .ads-block {
+        flex: 1;
+        width: 100%;
+        padding: 25px;
+        border-radius: 12px;
+    }
+    
+    .info-content {
+        font-size: 15px;
+        line-height: 1.7;
+    }
+    
+    .highlight-date {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .info-content {
+        font-size: 14px;
+    }
+    
+    .info-content p {
+        text-indent: 20px;
+        margin-bottom: 15px;
+    }
+    
+    .highlight-date {
+        font-size: 16px;
+    }
+}
+/* Заголовок "Братья-добровольцы!" */
+.campaign-title-gold {
+    font-family: 'Monomakh', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: #C9A961;
+    margin-bottom: 25px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-bottom: 2px solid #C9A961;
+    padding-bottom: 10px;
+    line-height: 1.2;
+}
+
+/* Выделение в белом блоке */
+.campaign-body-white .highlight-white {
+    color: #C9A961;
+    font-weight: 700;
+    font-size: 19px;
+    text-align: center;
+    text-indent: 0;
+    margin: 30px 0;
+    padding: 20px;
+    background: rgba(201, 169, 97, 0.1);
+    border-left: 4px solid #C9A961;
+    border-right: 4px solid #C9A961;
+    letter-spacing: 0.02em;
+}
+
+.campaign-body-white .urgent-white {
+    color: #FFD700;
+    font-weight: 700;
+    font-size: 20px;
+    text-align: center;
+    text-indent: 0;
+    margin: 35px 0;
+    padding: 25px;
+    background: rgba(201, 169, 97, 0.15);
+    border: 2px solid #C9A961;
+    border-radius: 8px;
+    letter-spacing: 0.05em;
+}
+
+.campaign-body-white .final-appeal {
+    color: #C9A961;
+    font-weight: 600;
+    font-size: 18px;
+    text-align: center;
+    text-indent: 0;
+    margin-top: 30px;
+    padding: 20px;
+    border-top: 2px solid rgba(201, 169, 97, 0.3);
+    font-style: italic;
+}
+
+/* Адаптивность для заголовка */
+@media (max-width: 768px) {
+    .campaign-title-gold {
+        font-size: 36px;
+    }
+    
+    .campaign-body-white .highlight-white {
+        font-size: 17px;
+        padding: 15px;
+    }
+    
+    .campaign-body-white .urgent-white {
+        font-size: 18px;
+        padding: 18px;
+    }
+    
+    .campaign-body-white .final-appeal {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .campaign-title-gold {
+        font-size: 32px;
+    }
+}
+
+/* ========== БЛОК "ПАРТИЯ НАРОДНОЙ СВОБОДЫ" ========== */
+.blue-campaign {
+    flex-direction: row;
+    background: rgba(74, 74, 74, 0.8); 
+}
+
+.campaign-text-blue {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    background: rgba(35, 152, 242, 0.2);
+}
+
+.campaign-title-blue {
+    font-family: 'Oswald', 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: #2398F2; /* Синий цвет демократов */
+    margin-bottom: 25px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-bottom: 2px solid #2398F2;
+    padding-bottom: 10px;
+    line-height: 1.2;
+}
+
+.campaign-body-blue {
+    font-family: 'Playfair Display', 'Times New Roman', serif;
+    font-size: 17px;
+    line-height: 1.9;
+    color: rgba(255, 255, 255, 0.95);
+    text-align: justify;
+}
+
+.campaign-body-blue p {
+    margin-bottom: 0;
+    text-indent: 30px;
+}
+
+.campaign-body-blue p:first-child {
+    text-indent: 0;
+}
+
+/* Адаптивность для синего блока */
+@media (max-width: 1024px) {
+    .blue-campaign {
+        flex-direction: column;
+    }
+    
+    .campaign-text-blue {
+        padding: 30px;
+    }
+    
+    .campaign-title-blue {
+        font-size: 36px;
+    }
+}
+
+@media (max-width: 768px) {
+    .campaign-text-blue {
+        padding: 25px;
+    }
+    
+    .campaign-title-blue {
+        font-size: 32px;
+    }
+    
+    .campaign-body-blue {
+        font-size: 15px;
+        line-height: 1.7;
+    }
+    
+    .campaign-body-blue p {
+        text-indent: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .campaign-title-blue {
+        font-size: 28px;
+    }
+    
+    .campaign-body-blue {
+        font-size: 14px;
+    }
+}
+/* Отдельная рамка для маленького изображения в синем блоке */
+.poster-frame-small {
+    flex: 0 0 400px; /* Меньшая ширина */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+}
+
+.poster-frame-small .campaign-poster {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* Адаптивность для маленькой рамки */
+@media (max-width: 1024px) {
+    .poster-frame-small {
+        flex: none;
+        width: calc(100% - 40px);
+        max-width: 100%;
+        margin: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .poster-frame-small {
+        padding: 15px;
+        border-radius: 12px;
+        margin: 15px;
+        width: calc(100% - 30px);
+    }
+}
+
+/* ========== СВОДКА ПОГИБШИХ ========== */
+.casualties-block {
+    margin: 60px 20px;
+    background: rgba(74, 74, 74, 0.95);
+    border-radius: 16px;
+    padding: 40px;
+    border: 1px solid rgba(201, 169, 97, 0.2);
+}
+
+.casualties-title {
+    font-family: 'Monomakh', serif;
+    font-size: 42px;
+    color: #C9A961;
+    text-align: center;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid rgba(201, 169, 97, 0.4);
+    letter-spacing: 0.05em;
+}
+
+.casualties-section {
+    margin-bottom: 40px;
+}
+
+.casualties-section:last-child {
+    margin-bottom: 0;
+}
+
+.casualties-subtitle {
+    font-family: 'Oswald', 'Playfair Display', serif;
+    font-size: 24px;
+    color: #2398F2;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding-left: 10px;
+    border-left: 4px solid #2398F2;
+}
+
+.casualties-subtitle.central {
+    color: #C41E3A;
+    border-left-color: #C41E3A;
+}
+
+.casualties-table {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.casualty-row {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 20px;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    transition: background 0.2s ease;
+}
+
+.casualty-row:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.country {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    color: #C9A961;
+    font-size: 16px;
+}
+
+.stats {
+    font-family: 'Playfair Display', 'Times New Roman', serif;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.6;
+}
+
+.casualty-total {
+    margin-top: 20px;
+    padding: 15px 20px;
+    background: rgba(201, 169, 97, 0.15);
+    border-radius: 8px;
+    border-left: 4px solid #C9A961;
+}
+
+.casualty-total strong {
+    color: #C9A961;
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+}
+
+/* Адаптивность */
+@media (max-width: 900px) {
+    .casualty-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        padding: 15px;
+    }
+    
+    .country {
+        font-size: 17px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid rgba(201, 169, 97, 0.2);
+    }
+    
+    .casualties-title {
+        font-size: 36px;
+    }
+    
+    .casualties-subtitle {
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 768px) {
+    .casualties-block {
+        margin: 40px 15px;
+        padding: 30px 20px;
+        border-radius: 12px;
+    }
+    
+    .casualties-title {
+        font-size: 32px;
+        margin-bottom: 30px;
+    }
+    
+    .casualties-subtitle {
+        font-size: 20px;
+    }
+    
+    .country,
+    .stats,
+    .casualty-total strong {
+        font-size: 14px;
+    }
+    
+    .casualty-row {
+        padding: 12px 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .casualties-title {
+        font-size: 28px;
+    }
+    
+    .casualties-subtitle {
+        font-size: 18px;
+    }
+    
+    .country {
+        font-size: 15px;
+    }
+    
+    .stats,
+    .casualty-total strong {
+        font-size: 13px;
+    }
+}
+
+/* ========== АГИТАЦИОННЫЕ ПЛАКАТЫ ========== */
+/* ========== АГИТАЦИОННЫЕ ПЛАКАТЫ ========== */
+.agitation-posters-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center; /* Центрирование по вертикали */
+    gap: 70px; /* Равное расстояние между плакатами */
+    padding: 0 50px; /* Равные отступы от краёв сайта */
+}
+
+.agitation-poster {
+    flex: 0 0 auto;
+    width: 680px;  /* Фиксированная ширина */
+    height: 800px; /* Фиксированная высота */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.agitation-poster img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Сохраняет пропорции, но вписывает в одинаковую рамку */
+    display: block;
+    /* Убираем любые лишние стили */
+    border-radius: 0;
+    box-shadow: none;
+    background: none;
+}
+
+/* Адаптивность */
+@media (max-width: 1100px) {
+    .agitation-posters-container {
+        flex-direction: column;
+        gap: 30px;
+        padding: 0 20px;
+    }
+    
+    .agitation-poster {
+        width: 100%;
+        max-width: 680px;
+        height: auto; /* На мобильных возвращаем естественную высоту */
+    }
+    
+    .agitation-poster img {
+        height: auto;
+        object-fit: unset;
+    }
+}
+
+@media (max-width: 768px) {
+    .agitation-posters-container {
+        margin: 40px 0;
+        gap: 25px;
+        padding: 0 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .agitation-posters-container {
+        gap: 20px;
+        padding: 0 10px;
+    }
+}
+
+/* ========== ГАЗЕТНЫЕ СТАТЬИ ========== */
+.newspaper-articles-block {
+    display: grid;
+    gap: 20px;
+    
+    /* ИСПРАВЛЕНИЕ ОТСТУПОВ */
+    margin: 60px auto;       /* Центрирование блока */
+    max-width: 1350px;       /* Ограничение ширины, чтобы не растягивался на весь экран */
+    width: 95%;              /* Чтобы не выходил за пределы на маленьких экранах */
+    
+    padding: 50px;           /* Внутренние отступы */
+    background: rgba(74, 74, 74, 0.95); /* Чуть плотнее серый фон */
+    border-radius: 16px;
+    border: 1px solid rgba(201, 169, 97, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Небольшая тень для красоты */
+}
+
+.article-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.article-title {
+    font-family: 'Monomakh', serif;
+    font-size: 32px;
+    color: #C9A961;
+    margin-bottom: 10px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid rgba(201, 169, 97, 0.4);
+    letter-spacing: 0.05em;
+}
+
+.article-content {
+    font-family: 'Playfair Display', 'Times New Roman', serif;
+    font-size: 16px;
+    line-height: 1.9;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.article-content p {
+    margin-bottom: 15px;
+}
+
+.article-content p:first-child {
+    text-indent: 0;
+}
+
+/* Адаптивность */
+@media (max-width: 900px) {
+    .newspaper-articles-block {
+        grid-template-columns: 1fr; /* Одна колонка на планшетах */
+        gap: 30px;
+        padding: 35px;
+        margin: 40px auto;
+        width: 90%;
+    }
+    
+    .article-title {
+        font-size: 28px;
+    }
+    
+    .article-content {
+        font-size: 15px;
+        line-height: 1.8;
+    }
+}
+
+@media (max-width: 768px) {
+    .newspaper-articles-block {
+        padding: 30px 25px;
+        border-radius: 12px;
+    }
+    
+    .article-title {
+        font-size: 26px;
+    }
+    
+    .article-content {
+        font-size: 14px;
+    }
+    
+    .article-content p {
+        text-indent: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .newspaper-articles-block {
+        padding: 25px 20px;
+        margin: 30px auto;
+        width: 95%;
+    }
+    
+    .article-title {
+        font-size: 24px;
+    }
+    
+    .article-content {
+        font-size: 13px;
+        line-height: 1.7;
+    }
+}
+
+/* ========== ФИНАЛЬНОЕ ИЗОБРАЖЕНИЕ ========== */
+.final-image-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px auto;
+    padding: 0 20px;
+    max-width: 800px; /* Согласуется с шириной остальных блоков */
+}
+
+.final-image-wrapper img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px; /* Плавные углы в стиле сайта */
+}
+
+@media (max-width: 768px) {
+    .final-image-wrapper {
+        margin: 40px auto;
+        padding: 0 15px;
     }
 }

@@ -2,11 +2,9 @@
 window.scrollTo(0, 0);
         document.documentElement.scrollTop = 0;
         
-        // Отключаем сохранение позиции скролла браузером
         if (history.scrollRestoration) {
             history.scrollRestoration = 'manual';
         }
-// ========== ТИТУЛЬНЫЙ СЛАЙД ==========
 let heroScrolled = false;
 let scrollTimeout;
 
@@ -20,10 +18,8 @@ function scrollToContent() {
     if (hero && pageWrapper) {
         heroScrolled = true;
         
-        // Основной контент выезжает НА титульник
         pageWrapper.classList.add('visible');
         
-        // После анимации скрываем hero
         setTimeout(() => {
             hero.classList.add('hidden');
             setTimeout(() => {
@@ -31,16 +27,13 @@ function scrollToContent() {
             }, 500);
         }, 1000);
         
-        // Разрешаем скролл
         setTimeout(() => {
             document.body.classList.remove('no-scroll');
             document.body.style.overflow = '';
         }, 1000);
     }
 }
-// ========== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ==========
 
-// Для церквей
 let currentChurchSlide = 0;
 let churchSlides = [];
 let totalChurchSlides = 0;
@@ -48,7 +41,6 @@ let churchArrowLeft = null;
 let churchArrowRight = null;
 let churchMaps = {};
 
-// Для музеев/памятников
 let currentMuseumSlide = 0;
 let museumSlides = [];
 let totalMuseumSlides = 0;
@@ -56,7 +48,6 @@ let museumArrowLeft = null;
 let museumArrowRight = null;
 let museumMaps = {};
 
-// Для театров
 let currentTheaterSlide = 0;
 let theaterSlides = [];
 let totalTheaterSlides = 0;
@@ -64,7 +55,6 @@ let theaterArrowLeft = null;
 let theaterArrowRight = null;
 let theaterMaps = {};
 
-// Для музеев (реальные музеи, не памятники)
 let currentRealMuseumSlide = 0;
 let realMuseumSlides = [];
 let totalRealMuseumSlides = 0;
@@ -72,7 +62,6 @@ let realMuseumArrowLeft = null;
 let realMuseumArrowRight = null;
 let realMuseumMaps = {};
 
-// Для других достопримечательностей
 let currentOtherSlide = 0;
 let otherSlides = [];
 let totalOtherSlides = 0;
@@ -80,15 +69,12 @@ let otherArrowLeft = null;
 let otherArrowRight = null;
 let otherMaps = {};
 
-// Для гео/транспорт
 let currentGeoSlide = 0;
 let geoSlides = [];
 let totalGeoSlides = 0;
 let geoArrowLeft = null;
 let geoArrowRight = null;
 let geoMaps = {};
-
-// ========== ФУНКЦИИ ДЛЯ ЦЕРКВЕЙ ==========
 
 function nextSlide() {
     if (currentChurchSlide < totalChurchSlides - 1) {
@@ -140,8 +126,6 @@ function updateCurrentChurchMap() {
     }
 }
 
-// ========== ФУНКЦИИ ДЛЯ МУЗЕЕВ ==========
-
 function nextMuseumSlide(direction) {
     if (direction === 'next' && currentMuseumSlide < totalMuseumSlides - 1) {
         museumSlides[currentMuseumSlide].classList.remove('active');
@@ -187,8 +171,6 @@ function updateCurrentMuseumMap() {
         setTimeout(() => museumMaps[currentMapName].container.fitToViewport(), 200);
     }
 }
-
-// ========== ФУНКЦИИ ДЛЯ ТЕАТРОВ ==========
 
 function nextTheaterSlide(direction) {
     if (direction === 'next' && currentTheaterSlide < totalTheaterSlides - 1) {
@@ -236,8 +218,6 @@ function updateCurrentTheaterMap() {
     }
 }
 
-// ========== ФУНКЦИИ ДЛЯ МУЗЕЕВ (реальные) ==========
-
 function nextRealMuseumSlide(direction) {
     if (direction === 'next' && currentRealMuseumSlide < totalRealMuseumSlides - 1) {
         realMuseumSlides[currentRealMuseumSlide].classList.remove('active');
@@ -283,8 +263,6 @@ function updateCurrentRealMuseumMap() {
         setTimeout(() => realMuseumMaps[currentMapName].container.fitToViewport(), 200);
     }
 }
-
-// ========== ФУНКЦИИ ДЛЯ ДРУГИХ ДОСТОПРИМЕЧАТЕЛЬНОСТЕЙ ==========
 
 function nextOtherSlide(direction) {
     if (direction === 'next' && currentOtherSlide < totalOtherSlides - 1) {
@@ -332,8 +310,6 @@ function updateCurrentOtherMap() {
     }
 }
 
-// ========== ФУНКЦИИ ДЛЯ ГЕО/ТРАНСПОРТ ==========
-
 function nextGeoSlide(direction) {
     if (direction === 'next' && currentGeoSlide < totalGeoSlides - 1) {
         geoSlides[currentGeoSlide].classList.remove('active');
@@ -380,8 +356,6 @@ function updateCurrentGeoMap() {
     }
 }
 
-// ========== ИНИЦИАЛИЗАЦИЯ КАРТ ==========
-
 function initChurchMaps() {
     if (typeof ymaps === 'undefined') return;
     
@@ -424,7 +398,6 @@ function initChurchMaps() {
 function initMuseumMaps() {
     if (typeof ymaps === 'undefined') return;
     
-    // 1. Мельница Гергардта
     const melnitsaContainer = document.getElementById('map-melnitsa');
     if (melnitsaContainer) {
         try {
@@ -441,7 +414,6 @@ function initMuseumMaps() {
         } catch (e) { console.error('Monument map error: map-melnitsa', e); }
     }
     
-    // 2. Дом Павлова
     const pavlovContainer = document.getElementById('map-pavlov');
     if (pavlovContainer) {
         try {
@@ -458,7 +430,6 @@ function initMuseumMaps() {
         } catch (e) { console.error('Monument map error: map-pavlov', e); }
     }
     
-    // 3. Памятник Ленину
     const leninContainer = document.getElementById('map-lenin');
     if (leninContainer) {
         try {
@@ -475,7 +446,6 @@ function initMuseumMaps() {
         } catch (e) { console.error('Monument map error: map-lenin', e); }
     }
     
-    // 4. Пожарный катер «Гаситель»
     const gasitelContainer = document.getElementById('map-gasitel');
     if (gasitelContainer) {
         try {
@@ -492,7 +462,6 @@ function initMuseumMaps() {
         } catch (e) { console.error('Monument map error: map-gasitel', e); }
     }
     
-    // 5. Волгоградский элеватор
     const elevatorContainer = document.getElementById('map-elevator');
     if (elevatorContainer) {
         try {
@@ -509,7 +478,6 @@ function initMuseumMaps() {
         } catch (e) { console.error('Monument map error: map-elevator', e); }
     }
     
-    // 6. Мамаев курган
     const mamaevContainer = document.getElementById('map-mamaev');
     if (mamaevContainer) {
         try {
@@ -526,7 +494,6 @@ function initMuseumMaps() {
         } catch (e) { console.error('Monument map error: map-mamaev', e); }
     }
     
-    // 7. Аллея Героев
     const alleyContainer = document.getElementById('map-alley');
     if (alleyContainer) {
         try {
@@ -543,7 +510,6 @@ function initMuseumMaps() {
         } catch (e) { console.error('Monument map error: map-alley', e); }
     }
     
-    // Финальная подгонка размеров
     setTimeout(() => {
         Object.values(museumMaps).forEach(m => m?.container.fitToViewport());
     }, 500);
@@ -552,7 +518,6 @@ function initMuseumMaps() {
 function initTheaterMaps() {
     if (typeof ymaps === 'undefined') return;
     
-    // 1. Кукольный театр
     const puppetContainer = document.getElementById('map-puppet');
     if (puppetContainer) {
         try {
@@ -569,7 +534,6 @@ function initTheaterMaps() {
         } catch (e) { console.error('Theater map error: map-puppet', e); }
     }
     
-    // 2. ТЮЗ
     const youthContainer = document.getElementById('map-youth');
     if (youthContainer) {
         try {
@@ -586,7 +550,6 @@ function initTheaterMaps() {
         } catch (e) { console.error('Theater map error: map-youth', e); }
     }
     
-    // 3. Казачий театр
     const cossackContainer = document.getElementById('map-cossack');
     if (cossackContainer) {
         try {
@@ -603,7 +566,6 @@ function initTheaterMaps() {
         } catch (e) { console.error('Theater map error: map-cossack', e); }
     }
     
-    // 4. Царицынская опера
     const operaContainer = document.getElementById('map-opera');
     if (operaContainer) {
         try {
@@ -620,7 +582,6 @@ function initTheaterMaps() {
         } catch (e) { console.error('Theater map error: map-opera', e); }
     }
     
-    // 5. Музыкальный театр
     const musicalContainer = document.getElementById('map-musical');
     if (musicalContainer) {
         try {
@@ -648,7 +609,6 @@ function initTheaterMaps() {
 function initRealMuseumMaps() {
     if (typeof ymaps === 'undefined') return;
     
-    // 1. «Сталинградская битва»
     const battleContainer = document.getElementById('map-museum-battle');
     if (battleContainer) {
         try {
@@ -665,7 +625,6 @@ function initRealMuseumMaps() {
         } catch (e) { console.error('Real museum map error: map-museum-battle', e); }
     }
     
-    // 2. «Россия — моя история»
     const russiaContainer = document.getElementById('map-museum-russia');
     if (russiaContainer) {
         try {
@@ -682,7 +641,6 @@ function initRealMuseumMaps() {
         } catch (e) { console.error('Real museum map error: map-museum-russia', e); }
     }
     
-    // 3. Областной краеведческий музей
     const regionalContainer = document.getElementById('map-museum-regional');
     if (regionalContainer) {
         try {
@@ -699,7 +657,6 @@ function initRealMuseumMaps() {
         } catch (e) { console.error('Real museum map error: map-museum-regional', e); }
     }
     
-    // 4. Мемориально-исторический музей
     const memorialContainer = document.getElementById('map-museum-memorial');
     if (memorialContainer) {
         try {
@@ -716,7 +673,6 @@ function initRealMuseumMaps() {
         } catch (e) { console.error('Real museum map error: map-museum-memorial', e); }
     }
     
-    // 5. Волгоградский планетарий
     const planetariumContainer = document.getElementById('map-museum-planetarium');
     if (planetariumContainer) {
         try {
@@ -733,18 +689,14 @@ function initRealMuseumMaps() {
         } catch (e) { console.error('Real museum map error: map-museum-planetarium', e); }
     }
     
-    // Финальная подгонка размеров
     setTimeout(() => {
         Object.values(realMuseumMaps).forEach(m => m?.container.fitToViewport());
     }, 500);
 }
 
-// ========== ИНИЦИАЛИЗАЦИЯ КАРТ ДРУГИХ ДОСТОПРИМЕЧАТЕЛЬНОСТЕЙ ==========
-
 function initOtherMaps() {
     if (typeof ymaps === 'undefined') return;
     
-    // 1. Фонтан «Искусство»
     const fountainContainer = document.getElementById('map-fountain-art');
     if (fountainContainer) {
         try {
@@ -760,8 +712,7 @@ function initOtherMaps() {
             otherMaps['fountain-art'] = fountainMap;
         } catch (e) { console.error('Other map error: map-fountain-art', e); }
     }
-    
-    // 2. Каланча пожарной команды
+
     const fireTowerContainer = document.getElementById('map-fire-tower');
     if (fireTowerContainer) {
         try {
@@ -777,8 +728,7 @@ function initOtherMaps() {
             otherMaps['fire-tower'] = fireTowerMap;
         } catch (e) { console.error('Other map error: map-fire-tower', e); }
     }
-    
-    // 3. Ж/д вокзал
+
     const stationContainer = document.getElementById('map-train-station');
     if (stationContainer) {
         try {
@@ -794,8 +744,7 @@ function initOtherMaps() {
             otherMaps['train-station'] = stationMap;
         } catch (e) { console.error('Other map error: map-train-station', e); }
     }
-    
-    // 4. Метротрам
+
     const metrotramContainer = document.getElementById('map-metrotram');
     if (metrotramContainer) {
         try {
@@ -811,19 +760,15 @@ function initOtherMaps() {
             otherMaps.metrotram = metrotramMap;
         } catch (e) { console.error('Other map error: map-metrotram', e); }
     }
-    
-    // Финальная подгонка размеров
+
     setTimeout(() => {
         Object.values(otherMaps).forEach(m => m?.container.fitToViewport());
     }, 500);
 }
 
-// ========== ИНИЦИАЛИЗАЦИЯ КАРТ ГЕО/ТРАНСПОРТ ==========
-
 function initGeoMaps() {
     if (typeof ymaps === 'undefined') return;
     
-    // 1. Волго-Донской канал
     const volgaDonContainer = document.getElementById('map-volga-don');
     if (volgaDonContainer) {
         try {
@@ -857,7 +802,6 @@ function initGeoMaps() {
         } catch (e) { console.error('Geo map error: map-ges', e); }
     }
     
-    // 3. Речной вокзал
     const riverStationContainer = document.getElementById('map-river-station');
     if (riverStationContainer) {
         try {
@@ -874,7 +818,6 @@ function initGeoMaps() {
         } catch (e) { console.error('Geo map error: map-river-station', e); }
     }
     
-    // 4. Центральная набережная
     const embankmentContainer = document.getElementById('map-embankment');
     if (embankmentContainer) {
         try {
@@ -890,8 +833,7 @@ function initGeoMaps() {
             geoMaps.embankment = embankmentMap;
         } catch (e) { console.error('Geo map error: map-embankment', e); }
     }
-    
-    // 5. «Танцующий» мост
+
     const dancingBridgeContainer = document.getElementById('map-dancing-bridge');
     if (dancingBridgeContainer) {
         try {
@@ -914,21 +856,16 @@ function initGeoMaps() {
     }, 500);
 }
 
-// ========== ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ ==========
-
 document.addEventListener('DOMContentLoaded', function() {
-    // Блокируем скролл при загрузке
     document.body.classList.add('no-scroll');
-    
-    // Обработка клавиши вниз
+
     document.addEventListener('keydown', function(e) {
         if ((e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') && !heroScrolled) {
             e.preventDefault();
             scrollToContent();
         }
     });
-    
-    // Обработка скролла колёсиком мыши
+
     document.addEventListener('wheel', function(e) {
         if (e.deltaY > 0 && !heroScrolled) {
             e.preventDefault();
@@ -938,8 +875,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 50);
         }
     }, { passive: false });
-    
-    // Обработка тача на мобильных
+
     let touchStartY = 0;
     document.addEventListener('touchstart', function(e) {
         touchStartY = e.touches[0].clientY;
@@ -951,8 +887,7 @@ document.addEventListener('DOMContentLoaded', function() {
             scrollToContent();
         }
     }, { passive: true });
-    
-    // === ЦЕРКВИ: Инициализация слайдера ===
+
     const churchSlider = document.querySelector('.attraction-section .attractions-slider');
     if (churchSlider) {
         churchSlides = churchSlider.querySelectorAll('.slide');
@@ -967,8 +902,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         updateChurchArrows();
     }
-    
-    // === МУЗЕИ: Инициализация слайдера ===
+
     const museumSlider = document.querySelector('#museums-section .museums-slider');
     if (museumSlider) {
         museumSlides = museumSlider.querySelectorAll('.slide');
@@ -984,7 +918,6 @@ document.addEventListener('DOMContentLoaded', function() {
         updateMuseumArrows();
     }
     
-    // === ТЕАТРЫ: Инициализация слайдера ===
     const theaterSlider = document.querySelector('#theaters-section .museums-slider');
     if (theaterSlider) {
         theaterSlides = theaterSlider.querySelectorAll('.slide');
@@ -1001,7 +934,6 @@ document.addEventListener('DOMContentLoaded', function() {
         updateTheaterArrows();
     }
     
-    // === МУЗЕИ (реальные): Инициализация слайдера ===
     const realMuseumSlider = document.querySelector('#real-museums-section .museums-slider');
     if (realMuseumSlider) {
         realMuseumSlides = realMuseumSlider.querySelectorAll('.slide');
@@ -1033,8 +965,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         updateOtherArrows();
     }
-    
-    // === ГЕО/ТРАНСПОРТ: Инициализация слайдера ===
+
     const geoSlider = document.querySelector('#geo-section .museums-slider');
     if (geoSlider) {
         geoSlides = geoSlider.querySelectorAll('.slide');
@@ -1131,10 +1062,6 @@ function scrollToTargetSection() {
         history.replaceState(null, null, window.location.pathname);
     }, 1000);
 }
-
-// ========== ФУНКЦИИ ПЕРЕКЛЮЧЕНИЯ СЛАЙДОВ (для прямого перехода) ==========
-// ========== ИСПРАВЛЕННЫЕ ФУНКЦИИ ПЕРЕКЛЮЧЕНИЯ СЛАЙДОВ ==========
-// Ключевое: слайды ДО целевого получают 'prev', ПОСЛЕ — 'next'
 
 function switchChurchSlide(index) {
     if (index < 0 || index >= totalChurchSlides || !churchSlides[index]) return;

@@ -242,7 +242,6 @@ h1 {
     background: rgba(255,255,255,0.25);
     border-radius: 4px;
     outline: none;
-    -webkit-appearance: none;
     margin: 0;
 }
 
@@ -1287,7 +1286,7 @@ h1 {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    min-height: 180px; /* Минимальная высота текстового блока */
+    min-height: 180px; 
 }
 
 .article-text strong {
@@ -1295,13 +1294,10 @@ h1 {
     font-weight: 700;
 }
 
-/* Широкая статья (архитектура) */
 .newspaper-wide {
     flex-basis: 100%;
     max-width: 850px;
     margin: 30px auto 0;
-    /* padding-top: 24px;
-    border-top: 2px dashed #d1cdc5; */
     text-align: center;
 }
 
@@ -1322,7 +1318,7 @@ h1 {
 }
 
 .newspaper-wide .article-image {
-    height: 350px; /* Чуть больше для широкой статьи */
+    height: 350px; 
     max-width: 100%;
 
     border: 1px solid #d1cdc5;
@@ -1348,10 +1344,6 @@ h1 {
         max-width: 900px;
     }
     
-    .newspaper-article {
-        min-width: 280px;
-        max-width: 380px;
-    }
     
     .article-image {
         height: 260px;
@@ -1395,5 +1387,260 @@ h1 {
     .newspaper-wide .article-text {
         font-size: 1rem;
         text-align: left;
+    }
+}
+
+@media (max-width: 1024px) {
+    
+    .main-content { margin: 20px 40px; }
+    .logo { margin-left: 20px !important; }
+    .footer-container { padding: 0 40px !important; } 
+    .footer-col { flex: 1 1 30% !important; min-width: 220px !important; }
+    
+    .top-section-row {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .stats-compact { max-width: 100%; }
+    .stats-compact-grid { grid-template-columns: 1fr; }
+    
+    .posters-block {
+        flex-direction: row !important;
+        gap: 12px !important;
+        justify-content: center;
+        align-items: flex-start;
+    }
+    .poster-item img {
+        width: 100% !important;
+        height: auto;
+        display: block;
+        border-radius: 4px;
+    }
+
+    .text-block-full {
+        padding: 40px 30px !important;
+        max-width: 100% !important;
+    }
+    .stalingrad-subtitle {
+        font-size: 2rem !important;
+        margin-bottom: 24px !important;
+    }
+    .stalingrad-text-large {
+        font-size: 1.15rem !important;
+        line-height: 1.9 !important;
+        text-align: justify !important;
+    }
+    .stalingrad-text-large .highlight {
+        display: block;
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 1px solid rgba(255,255,255,0.3);
+    }
+
+    .newspaper-container { max-width: 900px; }
+
+    h1 { font-size: 32px; }
+    .stalingrad-title { font-size: 1.8rem; }
+    .stalingrad-text { font-size: 1.15rem; }
+}
+/* ========== TIMES-CONTAINER: АДАПТИВ ДЛЯ ТЕЛЕФОНОВ ========== */
+
+/* Планшеты и крупные телефоны (до 768px) */
+@media (max-width: 768px) {
+    /* .times-container { margin: 10px auto 15px !important; }
+    .time-block {
+        padding: 8px 16px !important;
+        font-size: 13px !important;
+    } */
+}
+
+/* Телефоны (до 480px) — компактный режим */
+@media (max-width: 480px) {
+    .times-container { margin: 10px auto 15px !important; }
+    .time-block {
+        padding: 8px 16px !important;
+        font-size: 13px !important;
+    }
+
+}
+
+/* Очень узкие экраны (до 375px) — максимальная компактность */
+@media (max-width: 375px) {
+    .times-container {
+        margin: 8px auto 12px !important;
+        flex-wrap: wrap !important;
+    }
+    
+    .time-block {
+        padding: 6px 10px !important;
+        font-size: 11px !important;
+    }
+}
+
+/* ========== МИНИМАЛЬНЫЕ ОТСТУПЫ ДЛЯ ТЕЛЕФОНОВ ========== */
+
+/* Телефоны до 480px */
+@media (max-width: 480px) {
+    
+    /* === Основной контент === */
+    .main-content {
+        margin: 12px 12px !important; /* Было 20px */
+    }
+    
+    .stalingrad-content {
+        margin-top: 30px !important;
+        padding: 0 4px !important; /* Минимальные боковые отступы */
+    }
+    
+    /* === Секции === */
+    .top-section-row {
+        gap: 16px !important;
+        margin-bottom: 30px !important;
+    }
+    
+    .slogan-hero {
+        padding: 20px 16px !important; /* Было 35px 40px */
+        margin-bottom: 20px !important;
+    }
+    
+    .battle-stats-simple {
+        padding: 16px 18px !important; /* Было 24px 28px */
+    }
+    
+    .text-block-full {
+        padding: 24px 20px !important; /* Было 50px */
+        border-top-width: 4px !important;
+        border-bottom-width: 4px !important;
+    }
+    
+    /* === Газетные статьи === */
+    .newspaper-section {
+        margin: 40px 0 60px !important;
+        padding: 0 4px !important;
+    }
+    
+    .newspaper-container {
+        gap: 20px !important;
+    }
+    
+    .article-image {
+        height: 240px !important; /* Чуть компактнее */
+    }
+    
+    .article-text {
+        padding: 10px 14px !important;
+        min-height: 140px !important;
+        font-size: 0.95rem !important;
+    }
+    
+    /* === Плакаты === */
+    .posters-block {
+        gap: 10px !important;
+    }
+    
+    .poster-item img {
+        border-radius: 3px !important;
+    }
+    
+    /* === Футер === */
+    .footer {
+        margin-top: 50px !important;
+        padding: 24px 0 20px !important;
+    }
+    
+    .footer-container {
+        padding: 0 12px !important; /* Было 20px */
+        gap: 24px !important;
+    }
+    
+    .footer-col h4 {
+        font-size: 14px !important;
+        margin-bottom: 12px !important;
+    }
+    
+    .footer-col p,
+    .footer-col a {
+        font-size: 13px !important;
+    }
+    
+    /* === Заголовки === */
+    .stalingrad-title {
+        font-size: 1.4rem !important;
+        margin-bottom: 12px !important;
+    }
+    
+    .stalingrad-subtitle {
+        font-size: 1.6rem !important;
+        margin-bottom: 20px !important;
+    }
+    
+    .stalingrad-text,
+    .stalingrad-text-large {
+        font-size: 1.05rem !important;
+        line-height: 1.7 !important;
+    }
+    
+    .stats-title {
+        font-size: 1.2rem !important;
+        margin-bottom: 12px !important;
+    }
+    
+    .stats-subtitle {
+        font-size: 1.05rem !important;
+        margin: 16px 0 8px 0 !important;
+    }
+}
+
+/* Очень узкие экраны (≤375px) — экстремальная компактность */
+@media (max-width: 375px) {
+    
+    .main-content {
+        margin: 10px 10px !important;
+    }
+    
+    .stalingrad-content {
+        padding: 0 2px !important;
+    }
+    
+    .slogan-hero {
+        padding: 16px 12px !important;
+    }
+    
+    .battle-stats-simple,
+    .text-block-full {
+        padding: 14px 16px !important;
+    }
+    
+    .newspaper-section {
+        padding: 0 2px !important;
+        margin: 30px 0 50px !important;
+    }
+    
+    .article-image {
+        height: 220px !important;
+    }
+    
+    .article-text {
+        padding: 8px 12px !important;
+        font-size: 0.9rem !important;
+        min-height: 120px !important;
+    }
+    
+    .footer-container {
+        padding: 0 8px !important;
+    }
+    
+    .stalingrad-title {
+        font-size: 1.3rem !important;
+    }
+    
+    .stalingrad-subtitle {
+        font-size: 1.45rem !important;
+    }
+    
+    .stalingrad-text-large {
+        font-size: 1rem !important;
+        line-height: 1.6 !important;
     }
 }

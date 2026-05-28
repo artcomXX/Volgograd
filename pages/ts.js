@@ -111,8 +111,6 @@ function loadMusicFiles() {
         { name: 'Красная Армия Всех Сильней!', path: 'whiteMusic/WhiteArmyBlackBaron.mp3' },
         { name: 'Ойся, ты Ойся', path: 'whiteMusic/OicaTiOica.m4a' },
         { name: 'Эх, Яблочко!', path: 'whiteMusic/ExApple.m4a' },
-        // { name: 'Боже, Царя храни!', path: 'tsarMusic/bozhe_tsarya_khrani.mp3' },
-        // { name: 'Коль славенъ', path: 'tsarMusic/kol_slaven.mp3' }
     ];
     renderTrackSelect();
     audio.volume = 0.7;
