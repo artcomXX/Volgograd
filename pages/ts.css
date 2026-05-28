@@ -1681,9 +1681,21 @@ h1 {
     border-radius: 12px; /* Плавные углы в стиле сайта */
 }
 
-@media (max-width: 768px) {
-    .final-image-wrapper {
-        margin: 40px auto;
-        padding: 0 15px;
+@media (max-width: 425px) {
+    .time-block {
+        padding: 8px 16px !important;
+        font-size: 13px !important;
     }
+}
+@media (max-width: 325px) {
+    .time-block {
+        padding: 6px 12px !important;
+        font-size: 11px !important;
+    }
+}
+
+@media(max-width:320px) {
+    .page-wrapper {
+    display: inline;
+}
 }

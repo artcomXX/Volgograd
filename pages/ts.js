@@ -1,4 +1,3 @@
-// ========== ПЛЕЕР ВЕГА П-410С (ЦАРИЦЫНЪ) ==========
 let audio = new Audio();
 let tracks = [];
 let currentTrackIndex = 0;
@@ -108,7 +107,7 @@ function loadMusicFiles() {
     if (tracks.length > 0) return;
     tracks = [
         { name: 'Прощание Славянки', path: 'whiteMusic/ProchanieSlavianki.mp3' },
-        { name: 'Красная Армия Всех Сильней!', path: 'whiteMusic/WhiteArmyBlackBaron.mp3' },
+        { name: 'Красная Армия Всех Сильней!', path: 'whiteMusic/Whitearmyblackbaron.mp3' },
         { name: 'Ойся, ты Ойся', path: 'whiteMusic/OicaTiOica.m4a' },
         { name: 'Эх, Яблочко!', path: 'whiteMusic/ExApple.m4a' },
     ];
