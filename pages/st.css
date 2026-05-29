@@ -1644,3 +1644,175 @@ h1 {
         line-height: 1.6 !important;
     }
 }
+
+/* ========== СЕКЦИЯ КАРТ ОПЕРАЦИЙ ========== */
+.operations-section {
+    padding: 0 20px;
+}
+
+.operations-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.75);
+    border-radius: 20px;
+    padding: 40px 30px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+.operations-title {
+    font-family: 'Monomakh', serif;
+    font-size: 2.5rem;
+    text-align: center;
+    color: #3E2723;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+}
+
+.operations-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.operation-card {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(201, 169, 97, 0.2);
+}
+
+.operation-card:hover {
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+}
+
+.operation-image {
+    position: relative;
+    width: 100%;
+    height: 280px;
+    overflow: hidden;
+}
+
+.operation-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: sepia(20%) contrast(1.05);
+}
+
+.operation-desc {
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.operation-name {
+    font-family: 'Monomakh', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #C41E3A;
+    letter-spacing: 0.05em;
+    display: block;
+}
+
+.operation-date {
+    font-size: 0.9rem;
+    color: #5D4037;
+    font-weight: 500;
+    display: block;
+}
+
+/* ========== АДАПТИВНОСТЬ ========== */
+
+@media (max-width: 1024px) {
+    .operations-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+    
+    .operations-container {
+        padding: 30px 25px;
+    }
+    
+    .operations-title {
+        font-size: 2.2rem;
+    }
+    
+    .operation-image {
+        height: 260px;
+    }
+}
+
+@media (max-width: 768px) {
+    .operations-section {
+        margin: 40px 0 60px;
+        padding: 0 15px;
+    }
+    
+    .operations-container {
+        padding: 25px 20px;
+        border-radius: 16px;
+    }
+    
+    .operations-title {
+        font-size: 1.8rem;
+        margin-bottom: 30px;
+    }
+    
+    .operations-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .operation-image {
+        height: 240px;
+    }
+    
+    .operation-name {
+        font-size: 1.2rem;
+    }
+    
+    .operation-date {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .operations-container {
+        padding: 20px 15px;
+    }
+    
+    .operations-title {
+        font-size: 1.5rem;
+        margin-bottom: 25px;
+    }
+    
+    .operation-image {
+        height: 220px;
+    }
+    
+    .operation-name {
+        font-size: 1.1rem;
+    }
+    
+    .operation-date {
+        font-size: 0.8rem;
+    }
+    
+    .operation-desc {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 360px) {
+    .operation-image {
+        height: 200px;
+    }
+    
+    .operations-title {
+        font-size: 1.3rem;
+    }
+}
