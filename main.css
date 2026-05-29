@@ -1562,3 +1562,16 @@ h4 {
     color: transparent;
     letter-spacing: -0.02em;
 }
+/* .real-museum-arrow-left{
+    opacity: 0;
+    pointer-events: none;
+} */
+.real-museum-arrow-left{
+    left: 30px;
+}
+.other-arrow-left{
+    left: 30px;
+}
+.geo-arrow-left{
+    left: 30px;
+}
