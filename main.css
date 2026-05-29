@@ -1544,3 +1544,21 @@ padding: 20px 0;
         background-position: 50% center !important;
     }
 }
+
+.T{
+    margin: 40px 0 0 0;
+    font-size: 40px;
+    /* position: absolute; */
+    text-align: center;
+    
+}
+h4 {
+    font-size: 42px;
+    margin: 0;
+    font-weight: 800;
+    background: linear-gradient(135deg, #FFFFFF, #D4E6FF);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    letter-spacing: -0.02em;
+}
